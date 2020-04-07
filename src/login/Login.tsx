@@ -3,6 +3,7 @@ import './Login.scss';
 import { TextField, Grid, Container, Box, CssBaseline, Avatar, Typography, FormControlLabel, Checkbox, Button, Link, makeStyles } from '@material-ui/core';
 import { Redirect } from "react-router-dom";
 import AuthService from "../auth/AuthService";
+import User from "../auth/User";
 
 const Copyright = () => {
   return (
@@ -51,8 +52,8 @@ const Login = (props: any) => {
     authService.login(username, password).then((data) => {
       let content = data.data;
       if (data.statusCode == 200) {
-        localStorage.setItem('uid', content.uid);
-        localStorage.setItem('accessToken', content.accessToken);
+        let user = new User(content.uid, username, content.accessToken);
+        localStorage.setItem('user', JSON.stringify(user));
         props.history.push('/home');
       }
     });

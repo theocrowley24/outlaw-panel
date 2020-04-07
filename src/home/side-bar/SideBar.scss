@@ -1,0 +1,60 @@
+@import '../../styles/colours.scss';
+@import '../../styles/tools.scss';
+
+.wrapper {
+    width: 200px;
+    height: 100vh;
+
+    position: relative;
+
+    background-color: $primary;
+
+    color: white;
+
+    .content {
+        margin-left: 10px;
+    }
+}
+
+.sub-section {
+    margin-top: 60px;
+
+    .header {
+        font-size: 1em;
+        font-weight: bold;
+    }
+
+    .item {
+        font-size: 0.85em;
+        margin-left: 10px;
+
+        .m-icon {
+            vertical-align: -6px;
+            margin-right: 5px;
+        }
+    }
+}
+
+.tool-bar {
+    width: 100%;
+    height: 50px;
+
+    position:absolute; 
+    bottom:0;
+
+    background-color: $tertiary;
+
+    .icons-wrapper {
+        width: fit-content;
+        margin: auto;
+
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%);
+
+        span {
+            margin-left: 5px;
+            margin-right: 5px;
+        }
+    }
+}

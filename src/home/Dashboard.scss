@@ -1,0 +1,13 @@
+@import '../styles/colours.scss';
+
+.wrapper {
+    width: 100vw;
+    max-width: 100vw;
+    height: 100vh;
+    display: flex;
+}
+
+.content-wrapper {
+    background-color: $off-white;
+    color: black;
+}

@@ -1,3 +1,5 @@
+import User from "./User";
+
 class AuthService {
     public login(username: string, password: string) {
           return fetch('http://localhost:8080/auth/login', {
@@ -14,12 +16,21 @@ class AuthService {
     }
 
     public isLoggedIn(): boolean {
-        return localStorage.getItem('uid') != null && localStorage.getItem('accessToken') != null;
+        return localStorage.getItem('user') != null;
+    }
+
+    public getUser(): User | null {
+      let temp = localStorage.getItem('user');
+
+      if (temp != null) {
+        return JSON.parse(temp);
+      }
+
+      return null;
     }
 
     public logout(): void {
-        localStorage.removeItem('uid');
-        localStorage.removeItem('accessToken');
+        localStorage.removeItem('user');
     }
 }
 
