@@ -9,3 +9,25 @@
         vertical-align: -4px;
     }
 }
+
+.flex {
+    display: flex;
+    
+
+    width: fit-content;
+    margin: auto;
+}
+
+.medium-gap {
+    padding: 10px;
+}
+
+.h-gap {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.h-centre {
+    width: fit-content;
+    margin: auto;
+}

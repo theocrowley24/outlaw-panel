@@ -3,7 +3,9 @@ import React from "react";
 const Players = () => {
     return (
         <div>
-            <p>Hello there</p>
+            <table>
+                
+            </table>
         </div>
     )
 }

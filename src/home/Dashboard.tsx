@@ -3,6 +3,7 @@ import './Dashboard.scss';
 import SideBar from "./side-bar/SideBar";
 import { Router, Route } from "react-router-dom";
 import Players from "./players/Players";
+import Groups from "./admin/Groups";
 
 const Dashboard = () => {
     return (
@@ -13,6 +14,8 @@ const Dashboard = () => {
 
             <div className='content-wrapper'>
                 <Route path="/home/players" component={Players} />
+
+                <Route path="/home/admin/groups" component={Groups}/>
             </div>
         </div>
         
