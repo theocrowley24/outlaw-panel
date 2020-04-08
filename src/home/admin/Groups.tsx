@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import './Groups.scss';
 import PermissionService from "../../permissions/PermissionsService";
 import { UserGroupMapper, UserGroup } from "./UserGroup";
@@ -24,11 +24,11 @@ const Groups = () => {
         permissionService.createNewRank(newRankName);
     }
 
-    const componentDidMount = () => {
+    useEffect(() => {
         permissionService.getAllRanks().then((data: any) => {
             setRanks(UserGroupMapper.map(data.data));
         });
-    }
+      }, []);
     
     const Ranks = (): any[] => {
         let view = [];
