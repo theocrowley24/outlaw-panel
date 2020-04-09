@@ -7,11 +7,17 @@ export class UserGroup {
         this.id = data?.id;
         this.name = data?.name;
         this.permissions = data?.permissions;
+
+        console.log(this.permissions);
     }
 }
 
 export class UserGroupMapper {
     public static map(data: any): UserGroup[] {
+        if (data == null) {
+            return [];
+        }
+
         let userGroups: UserGroup[] = [];
 
         for (let i = 0; i < data.length; i++) {
