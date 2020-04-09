@@ -13,6 +13,8 @@
 .permissions-wrapper {
     background-color: white;
     box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    
+    position: relative;
 
     width: 800px;
     height: 500px;
@@ -45,4 +47,15 @@
     margin: auto;
 
     margin-top: 15px;
+}
+
+.bottom-bar {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+
+    width: fit-content;
+    
+    margin-right: 10px;
+    margin-bottom: 10px;
 }

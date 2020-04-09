@@ -8,8 +8,8 @@ import { Permission, PermissionMapper } from "./Permission";
 const Groups = () => {
     let permissionService = new PermissionService();
 
-    const [ranks, setRanks] = useState([new UserGroup(null)]);
-    const [selectedRank, setSelectedRank] = useState(new UserGroup(null));
+    const [ranks, setRanks] = useState([new UserGroup({id: -1, name: "", permissions: null})]);
+    const [selectedRank, setSelectedRank] = useState(new UserGroup({id: -1, name: "", permissions: null}));
     const [newRankName, setNewRankName] = useState("");
     const [open, setOpen] = useState(false);
     const [tabValue, setTabValue] = useState(0);
@@ -40,36 +40,58 @@ const Groups = () => {
             target.has = event.target.checked;
             temp[index] = target;
         }
-
+        
         setAllPermissions(temp);
     };
+
+    const handleUpdateClick = () => {
+        let permissionIds: number[] = [];
+        for (let i = 0; i < allPermissions.length; i++) {
+            if (allPermissions[i].has) {
+                permissionIds.push(allPermissions[i].id);
+            }            
+        }
+
+        permissionService.updateRankPermissions(selectedRank.id, permissionIds);
+        
+    }
+
+    const handleSetRankChange = (event: ChangeEvent<any>) => {
+        let group: UserGroup | undefined = ranks.find(rank => rank.id == event.target.value);
+        
+        if (group != undefined) {
+            setSelectedRank(group);
+
+            permissionService.getAllPermissions().then((data: any) => {
+                let temp = PermissionMapper.map(data.data);
+    
+                permissionService.getAllRankPermissions(group != undefined ? group.id : 0).then((data: any) => {
+                    setAllPermissions(PermissionMapper.setOwnedPermissions(temp, data.data));
+                });
+            }); 
+        }        
+    }
 
     useEffect(() => {
         permissionService.getAllRanks().then((data: any) => {
             setRanks(UserGroupMapper.map(data.data));
         });
-
-        permissionService.getAllPermissions().then((data: any) => {
-            let temp = PermissionMapper.map(data.data);
-
-            permissionService.getAllRankPermissions(7).then((data: any) => {
-                setAllPermissions(PermissionMapper.setOwnedPermissions(temp, data.data));
-            });
-        });
       }, []);
     
     const Ranks = (): any[] => {
-        let view = [];
+        let view: any[] = [];
 
         for (let i = 0; i < ranks.length; i++) {
-            view.push(<MenuItem key={i} value={ranks[i].id}>{ranks[i].name}</MenuItem>);
+            if (ranks[i].id != undefined || ranks[i] != undefined) {
+                view.push(<MenuItem key={i} value={ranks[i].id}>{ranks[i]?.name}</MenuItem>);
+            }            
         }
 
         return view;
     }
 
     const Permissions = (): any[] => {
-        let view = [];
+        let view: any[] = [];
 
         for (let i = 0; i < allPermissions.length; i++) {
             view.push(<FormControlLabel key={i} control={<Checkbox name={allPermissions[i].id?.toString()} onChange={handleCheckbox} checked={allPermissions[i].has || false} />} label={allPermissions[i].name}/>)
@@ -82,7 +104,7 @@ const Groups = () => {
         <div>
             <div className="ranks-wrapper">
                 <p className="sub-title">Select group<span className="material-icons m-icon" onClick={handleOnClick}>add</span></p>
-                <Select>
+                <Select onChange={handleSetRankChange}>
                     {Ranks()}
                 </Select>
                 <Dialog open={open} onClose-={handleClose} onBackdropClick={handleClose}>
@@ -112,6 +134,11 @@ const Groups = () => {
                 <div className="checkbox-wrapper">
                     {Permissions()}
                 </div>
+
+                <div className="bottom-bar">
+                    <Button onClick={handleUpdateClick} variant="contained" color="primary">Update</Button>
+                </div>
+                
             </div>
         </div>
         

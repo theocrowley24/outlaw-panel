@@ -7,8 +7,6 @@ export class UserGroup {
         this.id = data?.id;
         this.name = data?.name;
         this.permissions = data?.permissions;
-
-        console.log(this.permissions);
     }
 }
 

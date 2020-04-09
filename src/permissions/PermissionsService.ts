@@ -46,6 +46,17 @@ class PermissionService {
           });
     }
 
+    public updateRankPermissions(id: number, permissionIds: number[]): void {
+      fetch('http://localhost:8080/permissions/updateRankPermissions', {
+            method: 'POST',
+            headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({id: id, permissions: permissionIds})
+          });
+    }
+
 }
 
 export default PermissionService;
