@@ -29,7 +29,7 @@ const Groups = () => {
             setPermissionGroups(PermissionGroupMapper.map(data.data));
         });
 
-    }, []);
+    }, );
 
     const handleClose = (value: any) => {
         setOpen(false);

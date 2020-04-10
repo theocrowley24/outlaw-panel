@@ -1,7 +1,7 @@
 import React from "react";
 import './Dashboard.scss';
 import SideBar from "./side-bar/SideBar";
-import { Router, Route } from "react-router-dom";
+import { Route } from "react-router-dom";
 import Players from "./players/Players";
 import Groups from "./admin/Groups";
 
@@ -9,7 +9,7 @@ const Dashboard = () => {
     return (
         <div className='wrapper'>
             <div>
-                <SideBar></SideBar>
+                <SideBar/>
             </div>
 
             <div className='content-wrapper'>

@@ -1,9 +1,8 @@
-import PermissionService from "./PermissionsService";
 import {Permission} from "../home/admin/Permission";
 
 class PermissionChecker {
-    public static hasPermissions(required: PermissionValue, permissions: Permission[]): boolean {
-        return true;
+    public static hasPermission(required: PermissionValue, permissions: Permission[]): boolean {
+        return permissions.some(p => p.id === required && p.has);
     }
 }
 
