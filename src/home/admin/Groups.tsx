@@ -2,8 +2,10 @@ import React, { useState, useEffect, ChangeEvent } from "react";
 import './Groups.scss';
 import PermissionService from "../../permissions/PermissionsService";
 import { UserGroupMapper, UserGroup } from "./UserGroup";
-import { Select, MenuItem, Dialog, DialogTitle, DialogContent, Button, TextField, AppBar, Tabs, Tab, FormControlLabel, Checkbox } from "@material-ui/core";
+import { Select, MenuItem, Dialog, DialogTitle, DialogContent, Button, TextField, AppBar, Tabs, Tab, FormControlLabel, Checkbox, Snackbar } from "@material-ui/core";
 import { Permission, PermissionMapper } from "./Permission";
+import Alert from '@material-ui/lab/Alert';
+import {PermissionGroup, PermissionGroupMapper} from "./PermissionGroup";
 
 const Groups = () => {
     let permissionService = new PermissionService();
@@ -14,11 +16,19 @@ const Groups = () => {
     const [open, setOpen] = useState(false);
     const [tabValue, setTabValue] = useState(0);
     const [allPermissions, setAllPermissions] = useState([new Permission(null)]);
+    const [displayedPermissions, setDisplayedPermissions] = useState([new Permission(null)])
+    const [openSnackbar, setOpenSnackbar] = useState(false);
+    const [permissionGroups, setPermissionGroups] = useState([new PermissionGroup(null)]);
     
     useEffect(() => {
         permissionService.getAllRanks().then((data: any) => {
             setRanks(UserGroupMapper.map(data.data));
         });
+
+        permissionService.getAllPermissionGroups().then((data: any) => {
+            setPermissionGroups(PermissionGroupMapper.map(data.data));
+        });
+
     }, []);
 
     const handleClose = (value: any) => {
@@ -31,6 +41,15 @@ const Groups = () => {
 
     const handleTab = (event: ChangeEvent<{}>, newValue: number) => {
         setTabValue(newValue);
+
+        let temp: Permission[] = [];
+        for (let i = 0; i < allPermissions.length; i++) {
+            if (allPermissions[i].groupId == newValue) {
+                temp.push(allPermissions[i]);
+            }
+        }
+
+        setDisplayedPermissions(temp);
     }
 
     const handleCreateRank = () => {
@@ -60,8 +79,8 @@ const Groups = () => {
         }
 
         permissionService.updateRankPermissions(selectedRank.id, permissionIds);
-        
-    }
+        setOpenSnackbar(true);
+    };
 
     const handleSetRankChange = (event: ChangeEvent<any>) => {
         let group: UserGroup | undefined = ranks.find(rank => rank.id === event.target.value);
@@ -69,14 +88,57 @@ const Groups = () => {
         if (group !== undefined) {
             setSelectedRank(group);
 
+            permissionService.getAllPermissionsWithRank(group.id).then((data: any) => {
+                console.log(data.data);
+
+                let temp = PermissionMapper.map(data.data);
+                setAllPermissions(temp);
+
+                let disPerms: Permission[] = [];
+                for (let i = 0; i < temp.length; i++) {
+                    if (temp[i].groupId === tabValue) {
+                        disPerms.push(temp[i]);
+                    }
+                }
+
+                setDisplayedPermissions(disPerms);
+            });
+
+            // TODO refactor to single api call
+            /*
             permissionService.getAllPermissions().then((data: any) => {
                 let temp = PermissionMapper.map(data.data);
     
                 permissionService.getAllRankPermissions(group !== undefined ? group.id : 0).then((data: any) => {
-                    setAllPermissions(PermissionMapper.setOwnedPermissions(temp, data.data));
+                    let newAllPermissions = PermissionMapper.setOwnedPermissions(temp, data.data);
+                    setAllPermissions(newAllPermissions);
+
+                    let disPerms: Permission[] = [];
+                    for (let i = 0; i < newAllPermissions.length; i++) {
+                        if (newAllPermissions[i].groupId === tabValue) {
+                            disPerms.push(newAllPermissions[i]);
+                        }
+                    }
+
+                    setDisplayedPermissions(disPerms);
                 });
-            }); 
+            });
+             */
         }        
+    }
+
+    const handleCloseSnackbar = () => {
+        setOpenSnackbar(false);
+    }
+
+    const TabLabels = (): any[] => {
+        let view:any[] = [];
+
+        for (let i = 0; i < permissionGroups.length; i++) {
+            view.push(<Tab key={i} label={permissionGroups[i].name} value={permissionGroups[i].id} />)
+        }
+
+        return view;
     }
 
     const Ranks = (): any[] => {
@@ -94,8 +156,8 @@ const Groups = () => {
     const Permissions = (): any[] => {
         let view: any[] = [];
 
-        for (let i = 0; i < allPermissions.length; i++) {
-            view.push(<FormControlLabel key={i} control={<Checkbox name={allPermissions[i].id?.toString()} color="primary" onChange={handleCheckbox} checked={allPermissions[i].has || false} />} label={allPermissions[i].name}/>)
+        for (let i = 0; i < displayedPermissions.length; i++) {
+            view.push(<FormControlLabel key={i} control={<Checkbox name={displayedPermissions[i].id?.toString()} color="primary" onChange={handleCheckbox} checked={displayedPermissions[i].has || false} />} label={displayedPermissions[i].name}/>)
         }
 
         return view;
@@ -131,8 +193,7 @@ const Groups = () => {
                     textColor="primary"
                     centered
                 >
-                    <Tab label="Life" />
-                    <Tab label="Admin" />
+                    {TabLabels()}
                 </Tabs>
 
                 <div className="checkbox-wrapper">
@@ -144,6 +205,12 @@ const Groups = () => {
                 </div>
                 
             </div>
+
+            <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar}>
+                <Alert onClose={handleCloseSnackbar} severity="success">
+                This is a success message!
+                </Alert>
+            </Snackbar>
         </div>
         
     )

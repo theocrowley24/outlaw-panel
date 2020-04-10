@@ -33,6 +33,19 @@ class PermissionService {
           });
     }
 
+    public getAllPermissionsWithRank(id: number): Promise<any> {
+        return fetch('http://localhost:8080/permissions/getAllPermissionsWithRank', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({id: id})
+        }).then((response) => {
+            return response.json();
+        });
+    }
+
     public getAllRankPermissions(id: number): Promise<any> {
       return fetch('http://localhost:8080/permissions/getAllRankPermissions', {
             method: 'POST',
@@ -55,6 +68,18 @@ class PermissionService {
             },
             body: JSON.stringify({id: id, permissions: permissionIds})
           });
+    }
+
+    public getAllPermissionGroups(): Promise<any> {
+        return fetch('http://localhost:8080/permissions/getAllPermissionGroups', {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        }).then((response) => {
+            return response.json();
+        });
     }
 
 }

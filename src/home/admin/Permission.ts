@@ -1,11 +1,14 @@
 export class Permission {
     public id: number;
     public name: string;
-    public has: boolean = false;
+    public has: boolean;
+    public groupId: number;
 
     constructor(data: any) {
         this.id = data?.id;
         this.name = data?.name;
+        this.has = data?.rank_has === "true";
+        this.groupId = data?.group_id;
     }
 }
 
