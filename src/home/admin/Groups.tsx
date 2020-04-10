@@ -1,6 +1,6 @@
 import React, { useState, useEffect, ChangeEvent } from "react";
 import './Groups.scss';
-import PermissionService from "../../permissions/PermissionsService";
+import PermissionService from "../../services/PermissionsService";
 import { UserGroupMapper, UserGroup } from "./UserGroup";
 import { Select, MenuItem, Dialog, DialogTitle, DialogContent, Button, TextField, AppBar, Tabs, Tab, FormControlLabel, Checkbox, Snackbar } from "@material-ui/core";
 import { Permission, PermissionMapper } from "./Permission";
@@ -29,7 +29,7 @@ const Groups = () => {
             setPermissionGroups(PermissionGroupMapper.map(data.data));
         });
 
-    }, );
+    }, []);
 
     const handleClose = (value: any) => {
         setOpen(false);
@@ -157,7 +157,7 @@ const Groups = () => {
         let view: any[] = [];
 
         for (let i = 0; i < displayedPermissions.length; i++) {
-            view.push(<FormControlLabel key={i} control={<Checkbox name={displayedPermissions[i].id?.toString()} color="primary" onChange={handleCheckbox} checked={displayedPermissions[i].has || false} />} label={displayedPermissions[i].name}/>)
+            view.push(<FormControlLabel className="permission" key={i} control={<Checkbox name={displayedPermissions[i].id?.toString()} color="primary" onChange={handleCheckbox} checked={displayedPermissions[i].has || false} />} label={displayedPermissions[i].name}/>)
         }
 
         return view;

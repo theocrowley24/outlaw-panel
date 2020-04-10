@@ -51,9 +51,12 @@ const Login = (props: any) => {
 
     authService.login(username, password).then((data) => {
       let content = data.data;
-      if (data.statusCode == 200) {
-        let user = new User(content.uid, username, content.accessToken);
-        localStorage.setItem('user', JSON.stringify(user));
+      if (data.statusCode === 200) {
+        //let user = new User(content.uid, username, content.accessToken);
+        //localStorage.setItem('user', JSON.stringify(user));
+        localStorage.setItem("accessToken", content.accessToken);
+        localStorage.setItem("uid", content.uid);
+
         props.history.push('/home');
       }
     });

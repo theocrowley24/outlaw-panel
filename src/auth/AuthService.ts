@@ -1,22 +1,22 @@
 import User from "./User";
+import Service from "../services/Service";
 
-class AuthService {
+class AuthService extends Service {
     public login(username: string, password: string) {
-          return fetch('http://localhost:8080/auth/login', {
-            method: 'POST',
-            headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({username: username, password: password})
-          }).then((response) => {
-            return response.json();
-          });
-          
+          return this.postRequest("auth/login", {username: username, password: password});
+    }
+
+    public verify(): Promise<any> {
+        let token = localStorage.getItem("accessToken");
+
+        if (token) return this.postRequest("auth/verify", {accessToken: token});
+
+        return new Promise<any>(() => "Verification failed");
     }
 
     public isLoggedIn(): boolean {
-        return localStorage.getItem('user') != null;
+        //return localStorage.getItem('user') != null;
+        return localStorage.getItem("accessToken") != null;
     }
 
     public getUser(): User | null {
@@ -30,7 +30,9 @@ class AuthService {
     }
 
     public logout(): void {
-        localStorage.removeItem('user');
+        //localStorage.removeItem('user');
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("uid");
     }
 }
 

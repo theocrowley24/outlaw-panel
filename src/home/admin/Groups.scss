@@ -44,9 +44,17 @@
 
 .checkbox-wrapper {
     width: fit-content;
-    margin: auto;
+    margin: 15px auto auto;
 
-    margin-top: 15px;
+    padding: 20px;
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    .permission {
+        width: 200px;
+    }
 }
 
 .bottom-bar {
