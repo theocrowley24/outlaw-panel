@@ -7,30 +7,26 @@ import PermissionService from "../permissions/PermissionsService";
 import {PermissionMapper} from "../home/admin/Permission";
 
 const PrivateRoute = ({ component: Component, permission,...rest }: any) => {
-    //const [flag, setFlag] = useState(false);
-    //const [hasPermission, setHasPermission] = useState(false);
-
     const [state, setState] = useState({flag: false, hasPermission: false});
 
     let authService = new AuthService();
     let permissionService = new PermissionService();
 
-    console.log("Permissions loaded? " + state.flag);
-    console.log("User has permission to view this: " + state.hasPermission);
-
     useEffect(() => {
-        permissionService.getAllPermissionsWithRank(11).then((data: any) => {
-            let temp = PermissionMapper.map(data.data);
-            console.log(temp);
-            //setHasPermission(PermissionChecker.hasPermission(permission, temp));
-            //setFlag(true);
+        let uid = localStorage.getItem("uid");
 
-            setState({flag: true, hasPermission: PermissionChecker.hasPermission(permission, temp)});
-
-        });
-
+        if (uid) {
+            permissionService.getUsersRank(parseInt(uid)).then((data: any) => {
+                console.log(data.data);
+                permissionService.getAllPermissionsWithRank(data.data).then((data: any) => {
+                    let temp = PermissionMapper.map(data.data);
+                    setState({flag: true, hasPermission: PermissionChecker.hasPermission(permission, temp)});
+                });
+            });
+        } else {
+         setState({flag: true, hasPermission: false});
+        }
     }, [permission]);
-
 
     if (!state.flag) {
         return <div>Loading!</div>
@@ -43,16 +39,6 @@ const PrivateRoute = ({ component: Component, permission,...rest }: any) => {
             )} />
         );
     }
-
-    /*
-    return (
-        <Route {...rest} render={(props: JSX.IntrinsicAttributes) => (
-            authService.isLoggedIn() && hasPermission
-              ? <Component {...props} />
-              : <Redirect to='/login' />
-          )} />
-    );
-     */
 }
 
 export default PrivateRoute;

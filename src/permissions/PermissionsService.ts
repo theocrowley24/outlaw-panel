@@ -1,4 +1,16 @@
 class PermissionService {
+    public getUsersRank(id: number): Promise<any> {
+        return fetch('http://localhost:8080/permissions/getUsersRank', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({id: id})
+        }).then((response) => {
+            return response.json();
+        });
+    }
 
     public getAllRanks(): Promise<any> {
         return fetch('http://localhost:8080/permissions/getAllRanks', {
