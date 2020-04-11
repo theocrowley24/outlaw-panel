@@ -25,7 +25,7 @@ class Service {
 
     protected postRequest(path: string, body: any): Promise<any> {
         let uid = localStorage.getItem("uid");
-        let accessToken = localStorage.getItem("uid");
+        let accessToken = localStorage.getItem("accessToken");
 
         //if (!uid || !accessToken) return new Promise<any>(() => "Invalid auth session");
 

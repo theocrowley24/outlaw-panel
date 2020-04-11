@@ -9,8 +9,8 @@ class PermissionService extends Service {
         return this.getRequest("permissions/getAllRanks");
     }
 
-    public createNewRank(name: string): void {
-        this.postRequest("permissions/createNewRank", {name: name, permissions: null});
+    public createNewRank(name: string): Promise<any> {
+        return this.postRequest("permissions/createNewRank", {name: name, permissions: null});
     }
 
     public getAllPermissionsWithRank(id: number): Promise<any> {
@@ -21,18 +21,17 @@ class PermissionService extends Service {
         return this.getRequest("permissions/getAllPermissions");
     }
 
-    public updateRankPermissions(id: number, permissionIds: number[]): void {
-        this.postRequest("permissions/updateRankPermissions", {id: id, permissions: permissionIds});
+    public updateRankPermissions(id: number, permissionIds: number[]): Promise<any> {
+        return this.postRequest("permissions/updateRankPermissions", {id: id, permissions: permissionIds});
     }
 
     public getAllPermissionGroups(): Promise<any> {
         return this.getRequest("permissions/getAllPermissionGroups");
     }
 
-    public renameRank(rankId: number, newName: string): void {
-        this.postRequest("permissions/updateRank", {id: rankId, name: newName});
+    public renameRank(rankId: number, newName: string): Promise<any> {
+        return this.postRequest("permissions/updateRank", {id: rankId, name: newName});
     }
-
 }
 
 export default PermissionService;

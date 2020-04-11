@@ -13,18 +13,18 @@ const Groups = () => {
     const [ranks, setRanks] = useState([new UserGroup({id: -1, name: "", permissions: null})]);
     const [selectedRank, setSelectedRank] = useState(new UserGroup({id: -1, name: "", permissions: null}));
     const [newRankName, setNewRankName] = useState("");
+    const [renameRankName, setRenameRankName] = useState("");
     const [openNewRankDialog, setOpenNewRankDialog] = useState(false);
     const [openRenameRankDialog, setOpenRenameRankDialog] = useState(false);
     const [tabValue, setTabValue] = useState(0);
     const [allPermissions, setAllPermissions] = useState([new Permission(null)]);
     const [displayedPermissions, setDisplayedPermissions] = useState([new Permission(null)]);
-    const [openSnackbar, setOpenSnackbar] = useState(false);
+    const [openPopup, setOpenPopup] = useState(false);
+    const [popupMessage, setPopupMessage] = useState("");
     const [permissionGroups, setPermissionGroups] = useState([new PermissionGroup(null)]);
     
     useEffect(() => {
-        permissionService.getAllRanks().then((data: any) => {
-            setRanks(UserGroupMapper.map(data.data));
-        });
+        getAllRanks();
 
         permissionService.getAllPermissionGroups().then((data: any) => {
             setPermissionGroups(PermissionGroupMapper.map(data.data));
@@ -45,6 +45,17 @@ const Groups = () => {
         })
 
     }, []);
+
+    const getAllRanks = () => {
+        permissionService.getAllRanks().then((data: any) => {
+            setRanks(UserGroupMapper.map(data.data));
+        });
+    };
+
+    const showPopup = (message: string) => {
+      setPopupMessage(message);
+      setOpenPopup(true);
+    };
 
     const handleClose = (value: any) => {
         setOpenNewRankDialog(false);
@@ -73,8 +84,40 @@ const Groups = () => {
     };
 
     const handleCreateRank = () => {
-        permissionService.createNewRank(newRankName);
+        permissionService.createNewRank(newRankName).then(() => {
+            getAllRanks();
+            showPopup("New rank created!");
+        }).catch((error: any) => {
+            showPopup(error.message);
+        });
+
         setOpenNewRankDialog(false);
+    };
+
+    const handleRenameRank = () => {
+        permissionService.renameRank(selectedRank.id, renameRankName).then(() => {
+            getAllRanks();
+            showPopup("Rank renamed!");
+        }).catch((error: any) => {
+            showPopup(error);
+        });
+
+        setOpenRenameRankDialog(false);
+    };
+
+    const handleUpdateClick = () => {
+        let permissionIds: number[] = [];
+        for (let i = 0; i < allPermissions.length; i++) {
+            if (allPermissions[i].has) {
+                permissionIds.push(allPermissions[i].id);
+            }
+        }
+
+        permissionService.updateRankPermissions(selectedRank.id, permissionIds).then(() => {
+            showPopup("Rank permissions updated!");
+        }).catch((error: any) => {
+            showPopup(error);
+        });
     };
 
     const handleCheckbox = (event: ChangeEvent<HTMLInputElement>) => {
@@ -90,17 +133,7 @@ const Groups = () => {
         setAllPermissions(temp);
     };
 
-    const handleUpdateClick = () => {
-        let permissionIds: number[] = [];
-        for (let i = 0; i < allPermissions.length; i++) {
-            if (allPermissions[i].has) {
-                permissionIds.push(allPermissions[i].id);
-            }            
-        }
 
-        permissionService.updateRankPermissions(selectedRank.id, permissionIds);
-        setOpenSnackbar(true);
-    };
 
     const handleSetRankChange = (event: ChangeEvent<any>) => {
         let group: UserGroup | undefined = ranks.find(rank => rank.id === event.target.value);
@@ -124,12 +157,8 @@ const Groups = () => {
         }        
     };
 
-    const renameRank = (rankName: string) => {
-
-    };
-
     const handleCloseSnackbar = () => {
-        setOpenSnackbar(false);
+        setOpenPopup(false);
     };
 
     const TabLabels = (): any[] => {
@@ -196,10 +225,10 @@ const Groups = () => {
                 <Dialog open={openRenameRankDialog} onBackdropClick={handleClose}>
                     <DialogTitle>Rename {selectedRank.name}</DialogTitle>
                     <DialogContent>
-                        <div className="h-centre"><TextField id="standard-basic" label="Name" onChange={e => renameRank(e.target.value)} /></div>
+                        <div className="h-centre"><TextField id="standard-basic" label="Name" onChange={e => setRenameRankName(e.target.value)} /></div>
                         <div className="flex medium-gap">
                             <div className="h-gap"><Button variant="outlined" onClick={handleClose}>Cancel</Button></div>
-                            <div className="h-gap"><Button variant="contained" color="primary" onClick={handleCreateRank}>Update</Button></div>
+                            <div className="h-gap"><Button variant="contained" color="primary" onClick={handleRenameRank}>Update</Button></div>
                         </div>
                     </DialogContent>
                 </Dialog>
@@ -225,9 +254,9 @@ const Groups = () => {
                 </div>
             </div>
 
-            <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar}>
+            <Snackbar open={openPopup} autoHideDuration={6000} onClose={handleCloseSnackbar}>
                 <Alert onClose={handleCloseSnackbar} severity="success">
-                This is a success message!
+                {popupMessage}
                 </Alert>
             </Snackbar>
         </div>
