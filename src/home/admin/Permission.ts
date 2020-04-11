@@ -14,7 +14,7 @@ export class Permission {
 
 export class PermissionMapper {
     public static map(data: any): Permission[] {
-        if (data == null) {
+        if (data === null) {
             return [];
         }
 
@@ -34,8 +34,8 @@ export class PermissionMapper {
         }
 
         for (let i = 0; i < temp.length; i++) {
-            let target: Permission | undefined = permissions.find(permission => permission.id == temp[i]);
-            if (target != undefined) {
+            let target: Permission | undefined = permissions.find(permission => permission.id === temp[i]);
+            if (target !== undefined) {
                 let index =  permissions.indexOf(target);
                 target.has = true;
                 permissions[index] = target;

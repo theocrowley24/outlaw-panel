@@ -17,12 +17,20 @@ class PermissionService extends Service {
         return this.postRequest("permissions/getAllPermissionsWithRank", {id: id});
     }
 
+    public getAllPermissions(): Promise<any> {
+        return this.getRequest("permissions/getAllPermissions");
+    }
+
     public updateRankPermissions(id: number, permissionIds: number[]): void {
         this.postRequest("permissions/updateRankPermissions", {id: id, permissions: permissionIds});
     }
 
     public getAllPermissionGroups(): Promise<any> {
         return this.getRequest("permissions/getAllPermissionGroups");
+    }
+
+    public renameRank(rankId: number, newName: string): void {
+        this.postRequest("permissions/updateRank", {id: rankId, name: newName});
     }
 
 }

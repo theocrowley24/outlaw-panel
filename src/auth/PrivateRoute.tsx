@@ -1,4 +1,4 @@
-import {Component, useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import React from "react";
 import { Redirect, Route } from "react-router-dom";
 import AuthService from "./AuthService";
@@ -8,32 +8,38 @@ import {PermissionMapper} from "../home/admin/Permission";
 import Loading from "../loading/Loading";
 
 const PrivateRoute = ({ component: Component, permission,...rest }: any) => {
-    const [state, setState] = useState({flag: false, hasPermission: false, authVerified: false});
+    const [state, setState] = useState({loggingIn: false, flag: false, hasPermission: false, authVerified: false});
 
     let authService = new AuthService();
     let permissionService = new PermissionService();
 
     useEffect(() => {
-        let uid = localStorage.getItem("uid");
+        let uid = localStorage.getItem("uid"); // TODO Replace local storage with a cookie
+
+        if (!uid) {
+            console.log("UID NOT SET YOU IDIOT");
+
+            setState({loggingIn: true, flag: false, hasPermission: false, authVerified: false});
+        }
 
         authService.verify().then((authData: any) => {
-            console.log(authData);
-
             if (uid) {
                 permissionService.getUsersRank(parseInt(uid)).then((data: any) => {
                     permissionService.getAllPermissionsWithRank(data.data).then((data: any) => {
                         let temp = PermissionMapper.map(data.data);
-                        setState({flag: true, hasPermission: PermissionChecker.hasPermission(permission, temp), authVerified: authData});
+                        console.log(authData);
+                        setState({loggingIn: false, flag: true, hasPermission: PermissionChecker.hasPermission(permission, temp), authVerified: authData.data});
                     });
                 });
             } else {
-                setState({flag: true, hasPermission: false, authVerified: false});
+                setState({loggingIn: false, flag: true, hasPermission: false, authVerified: false});
+                console.log("No UID");
             }
         });
 
     }, [permission]);
 
-    if (!state.flag) {
+    if (!state.flag && !state.loggingIn) {
         return <Loading />
     } else {
         return (

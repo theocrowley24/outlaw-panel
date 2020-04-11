@@ -1,6 +1,7 @@
 import React from "react";
 import './SideBar.scss';
 import AuthService from "../../auth/AuthService";
+import {Link} from "react-router-dom";
 
 const SideBar = () => {
     let authService = new AuthService();
@@ -27,7 +28,7 @@ const SideBar = () => {
 
                     <p className='item'><span className="material-icons m-icon">people</span>Metrics</p>
                     <p className='item'><span className="material-icons m-icon">people</span>Logs</p>
-                    <p className='item'><span className="material-icons m-icon">people</span>Groups</p>
+                    <p className='item'><span className="material-icons m-icon">people</span><Link to={`/home/admin/groups`} className={'link'}>Groups</Link></p>
                     <p className='item'><span className="material-icons m-icon">people</span>Users</p>
                 </div>
 
@@ -47,6 +48,6 @@ const SideBar = () => {
             </div>
         </div>
     )
-}
+};
 
 export default SideBar;

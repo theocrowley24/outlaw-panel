@@ -42,6 +42,17 @@
     }
 }
 
+.select-wrapper {
+    display: flex;
+
+    .m-icon {
+        display: flex;
+        margin-left: auto;
+
+        cursor: pointer;
+    }
+}
+
 .checkbox-wrapper {
     width: fit-content;
     margin: 15px auto auto;

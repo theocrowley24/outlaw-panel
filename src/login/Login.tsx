@@ -1,23 +1,8 @@
-import React, { FormEvent, useState } from "react";
+import React, {useState} from "react";
 import './Login.scss';
 import { TextField, Grid, Container, Box, CssBaseline, Avatar, Typography, FormControlLabel, Checkbox, Button, Link, makeStyles } from '@material-ui/core';
 import { Redirect } from "react-router-dom";
 import AuthService from "../auth/AuthService";
-import User from "../auth/User";
-
-const Copyright = () => {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
-
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -44,6 +29,10 @@ const Login = (props: any) => {
 
   const classes = useStyles();
 
+  let authService = new AuthService();
+
+  if (authService.isLoggedIn()) return <Redirect to="/home"/>
+
   const handleSubmit = (event: any): void => {
     event.preventDefault();
 
@@ -51,9 +40,8 @@ const Login = (props: any) => {
 
     authService.login(username, password).then((data) => {
       let content = data.data;
+
       if (data.statusCode === 200) {
-        //let user = new User(content.uid, username, content.accessToken);
-        //localStorage.setItem('user', JSON.stringify(user));
         localStorage.setItem("accessToken", content.accessToken);
         localStorage.setItem("uid", content.uid);
 

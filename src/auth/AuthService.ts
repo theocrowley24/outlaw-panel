@@ -3,6 +3,7 @@ import Service from "../services/Service";
 
 class AuthService extends Service {
     public login(username: string, password: string) {
+        console.log("Sending meme");
           return this.postRequest("auth/login", {username: username, password: password});
     }
 

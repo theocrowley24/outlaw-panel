@@ -2,7 +2,7 @@ import React, { useState, useEffect, ChangeEvent } from "react";
 import './Groups.scss';
 import PermissionService from "../../services/PermissionsService";
 import { UserGroupMapper, UserGroup } from "./UserGroup";
-import { Select, MenuItem, Dialog, DialogTitle, DialogContent, Button, TextField, AppBar, Tabs, Tab, FormControlLabel, Checkbox, Snackbar } from "@material-ui/core";
+import { Select, MenuItem, Dialog, DialogTitle, DialogContent, Button, TextField, Tabs, Tab, FormControlLabel, Checkbox, Snackbar } from "@material-ui/core";
 import { Permission, PermissionMapper } from "./Permission";
 import Alert from '@material-ui/lab/Alert';
 import {PermissionGroup, PermissionGroupMapper} from "./PermissionGroup";
@@ -13,10 +13,11 @@ const Groups = () => {
     const [ranks, setRanks] = useState([new UserGroup({id: -1, name: "", permissions: null})]);
     const [selectedRank, setSelectedRank] = useState(new UserGroup({id: -1, name: "", permissions: null}));
     const [newRankName, setNewRankName] = useState("");
-    const [open, setOpen] = useState(false);
+    const [openNewRankDialog, setOpenNewRankDialog] = useState(false);
+    const [openRenameRankDialog, setOpenRenameRankDialog] = useState(false);
     const [tabValue, setTabValue] = useState(0);
     const [allPermissions, setAllPermissions] = useState([new Permission(null)]);
-    const [displayedPermissions, setDisplayedPermissions] = useState([new Permission(null)])
+    const [displayedPermissions, setDisplayedPermissions] = useState([new Permission(null)]);
     const [openSnackbar, setOpenSnackbar] = useState(false);
     const [permissionGroups, setPermissionGroups] = useState([new PermissionGroup(null)]);
     
@@ -29,33 +30,52 @@ const Groups = () => {
             setPermissionGroups(PermissionGroupMapper.map(data.data));
         });
 
+        permissionService.getAllPermissions().then((data: any) => {
+            let temp = PermissionMapper.map(data.data);
+            setAllPermissions(temp);
+
+            let disPerms: Permission[] = [];
+            for (let i = 0; i < temp.length; i++) {
+                if (temp[i].groupId === tabValue) {
+                    disPerms.push(temp[i]);
+                }
+            }
+
+            setDisplayedPermissions(disPerms);
+        })
+
     }, []);
 
     const handleClose = (value: any) => {
-        setOpen(false);
-    }
+        setOpenNewRankDialog(false);
+        setOpenRenameRankDialog(false);
+    };
 
-    const handleOnClick = () => {
-        setOpen(true);
-    }
+    const handleOnClickNewRankDialog = () => {
+        setOpenNewRankDialog(true);
+    };
+
+    const handleOnClickRenameRankDialog = () => {
+        setOpenRenameRankDialog(true);
+    };
 
     const handleTab = (event: ChangeEvent<{}>, newValue: number) => {
         setTabValue(newValue);
 
         let temp: Permission[] = [];
         for (let i = 0; i < allPermissions.length; i++) {
-            if (allPermissions[i].groupId == newValue) {
+            if (allPermissions[i].groupId === newValue) {
                 temp.push(allPermissions[i]);
             }
         }
 
         setDisplayedPermissions(temp);
-    }
+    };
 
     const handleCreateRank = () => {
         permissionService.createNewRank(newRankName);
-        setOpen(false);
-    }
+        setOpenNewRankDialog(false);
+    };
 
     const handleCheckbox = (event: ChangeEvent<HTMLInputElement>) => {
         let temp = [...allPermissions];
@@ -89,8 +109,6 @@ const Groups = () => {
             setSelectedRank(group);
 
             permissionService.getAllPermissionsWithRank(group.id).then((data: any) => {
-                console.log(data.data);
-
                 let temp = PermissionMapper.map(data.data);
                 setAllPermissions(temp);
 
@@ -103,33 +121,16 @@ const Groups = () => {
 
                 setDisplayedPermissions(disPerms);
             });
-
-            // TODO refactor to single api call
-            /*
-            permissionService.getAllPermissions().then((data: any) => {
-                let temp = PermissionMapper.map(data.data);
-    
-                permissionService.getAllRankPermissions(group !== undefined ? group.id : 0).then((data: any) => {
-                    let newAllPermissions = PermissionMapper.setOwnedPermissions(temp, data.data);
-                    setAllPermissions(newAllPermissions);
-
-                    let disPerms: Permission[] = [];
-                    for (let i = 0; i < newAllPermissions.length; i++) {
-                        if (newAllPermissions[i].groupId === tabValue) {
-                            disPerms.push(newAllPermissions[i]);
-                        }
-                    }
-
-                    setDisplayedPermissions(disPerms);
-                });
-            });
-             */
         }        
-    }
+    };
+
+    const renameRank = (rankName: string) => {
+
+    };
 
     const handleCloseSnackbar = () => {
         setOpenSnackbar(false);
-    }
+    };
 
     const TabLabels = (): any[] => {
         let view:any[] = [];
@@ -139,7 +140,7 @@ const Groups = () => {
         }
 
         return view;
-    }
+    };
 
     const Ranks = (): any[] => {
         let view: any[] = [];
@@ -151,7 +152,7 @@ const Groups = () => {
         }
 
         return view;
-    }
+    };
 
     const Permissions = (): any[] => {
         let view: any[] = [];
@@ -161,19 +162,27 @@ const Groups = () => {
         }
 
         return view;
-    }
+    };
 
     return (
         <div>
             <div className="ranks-wrapper">
-                <p className="sub-title">Select group<span className="material-icons m-icon" onClick={handleOnClick}>add</span></p>
-                <Select onChange={handleSetRankChange} value={selectedRank.id}>
-                    <MenuItem value="">
-                        <em>None</em>
-                    </MenuItem>
-                    {Ranks()}
-                </Select>
-                <Dialog open={open} onBackdropClick={handleClose}>
+                <p className="sub-title">Select group<span className="material-icons m-icon" onClick={handleOnClickNewRankDialog}>add</span></p>
+
+                <div className={'select-wrapper'}>
+                    <Select onChange={handleSetRankChange} value={selectedRank.id}>
+                        <MenuItem value="">
+                            <em>None</em>
+                        </MenuItem>
+                        {Ranks()}
+                    </Select>
+
+                    <span className="material-icons m-icon" onClick={handleOnClickRenameRankDialog}>
+                        text_fields
+                    </span>
+                </div>
+
+                <Dialog open={openNewRankDialog} onBackdropClick={handleClose}>
                         <DialogTitle>Create a new user group</DialogTitle>
                         <DialogContent>
                             <div className="h-centre"><TextField id="standard-basic" label="Name" onChange={e => setNewRankName(e.target.value)} /></div>
@@ -182,6 +191,17 @@ const Groups = () => {
                                 <div className="h-gap"><Button variant="contained" color="primary" onClick={handleCreateRank}>Create</Button></div>
                             </div>
                         </DialogContent>
+                </Dialog>
+
+                <Dialog open={openRenameRankDialog} onBackdropClick={handleClose}>
+                    <DialogTitle>Rename {selectedRank.name}</DialogTitle>
+                    <DialogContent>
+                        <div className="h-centre"><TextField id="standard-basic" label="Name" onChange={e => renameRank(e.target.value)} /></div>
+                        <div className="flex medium-gap">
+                            <div className="h-gap"><Button variant="outlined" onClick={handleClose}>Cancel</Button></div>
+                            <div className="h-gap"><Button variant="contained" color="primary" onClick={handleCreateRank}>Update</Button></div>
+                        </div>
+                    </DialogContent>
                 </Dialog>
             </div>
 
@@ -203,7 +223,6 @@ const Groups = () => {
                 <div className="bottom-bar">
                     <Button onClick={handleUpdateClick} variant="contained" color="primary">Update</Button>
                 </div>
-                
             </div>
 
             <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar}>
@@ -214,6 +233,6 @@ const Groups = () => {
         </div>
         
     )
-}
+};
 
 export default Groups;
