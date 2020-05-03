@@ -17,7 +17,7 @@ const SideBar = () => {
                 <div className='sub-section'>
                     <p className='header'>Life</p>
 
-                    <p className='item'><span className="material-icons m-icon">people</span>Players</p>
+                    <p className='item'><span className="material-icons m-icon">people</span><Link to={'/home/players'} className={'link'}>Players</Link></p>
                     <p className='item'><span className="material-icons m-icon">people</span>Vehicles</p>
                     <p className='item'><span className="material-icons m-icon">people</span>Gangs</p>
                     <p className='item'><span className="material-icons m-icon">people</span>Houses</p>

@@ -14,7 +14,6 @@ const Dashboard = () => {
 
             <div className='content-wrapper'>
                 <Route path="/home/players" component={Players} />
-
                 <Route path="/home/admin/groups" component={Groups}/>
             </div>
         </div>

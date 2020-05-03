@@ -31,7 +31,7 @@ const Login = (props: any) => {
 
   let authService = new AuthService();
 
-  if (authService.isLoggedIn()) return <Redirect to="/home"/>
+  if (authService.isLoggedIn()) return <Redirect to="/home"/>;
 
   const handleSubmit = (event: any): void => {
     event.preventDefault();
@@ -41,14 +41,19 @@ const Login = (props: any) => {
     authService.login(username, password).then((data) => {
       let content = data.data;
 
+      let redirected = false;
+
       if (data.statusCode === 200) {
         localStorage.setItem("accessToken", content.accessToken);
         localStorage.setItem("uid", content.uid);
 
-        props.history.push('/home');
+        if (!redirected) {
+          redirected = true;
+          props.history.push('/home');
+        }
       }
     });
-  }
+  };
 
   return (
     <Container component="main" maxWidth="xs">

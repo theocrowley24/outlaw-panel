@@ -3,8 +3,7 @@ import Service from "../services/Service";
 
 class AuthService extends Service {
     public login(username: string, password: string) {
-        console.log("Sending meme");
-          return this.postRequest("auth/login", {username: username, password: password});
+        return this.postRequest("auth/login", {username: username, password: password});
     }
 
     public verify(): Promise<any> {
@@ -16,7 +15,6 @@ class AuthService extends Service {
     }
 
     public isLoggedIn(): boolean {
-        //return localStorage.getItem('user') != null;
         return localStorage.getItem("accessToken") != null;
     }
 
@@ -31,7 +29,6 @@ class AuthService extends Service {
     }
 
     public logout(): void {
-        //localStorage.removeItem('user');
         localStorage.removeItem("accessToken");
         localStorage.removeItem("uid");
     }

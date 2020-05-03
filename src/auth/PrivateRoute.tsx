@@ -17,8 +17,6 @@ const PrivateRoute = ({ component: Component, permission,...rest }: any) => {
         let uid = localStorage.getItem("uid"); // TODO Replace local storage with a cookie
 
         if (!uid) {
-            console.log("UID NOT SET YOU IDIOT");
-
             setState({loggingIn: true, flag: false, hasPermission: false, authVerified: false});
         }
 
