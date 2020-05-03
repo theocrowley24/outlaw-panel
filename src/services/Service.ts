@@ -1,4 +1,4 @@
-class Service {
+abstract class Service {
     protected getRequest(path: string): Promise<any> {
         let uid = localStorage.getItem("uid");
         let accessToken = localStorage.getItem("accessToken");

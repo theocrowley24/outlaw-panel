@@ -14,7 +14,7 @@ export class Permission {
 
 export class PermissionMapper {
     public static map(data: any): Permission[] {
-        if (data === null) {
+        if (data === null || !data) {
             return [];
         }
 
