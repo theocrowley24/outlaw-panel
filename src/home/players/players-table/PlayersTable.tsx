@@ -22,18 +22,22 @@ const PlayersTable = ({players}: any) => {
     const [pageIndex, setPageIndex] = useState(0);
     const [displayedPlayers, setDisplayedPlayers] = useState([new Player(null)]);
 
+    const filterPlayers = (pageIndex: number, pageSize: number) => {
+        return players.filter((player: Player, index: number) => !(index - (pageIndex * pageSize) >= pageSize || index < (pageIndex * pageSize)));
+    }
+
     useEffect(() => {
-        setDisplayedPlayers(players.filter((player: Player, index: number) => !(index - (pageIndex * pageSize) >= pageSize || index < (pageIndex * pageSize))));
+        setDisplayedPlayers(filterPlayers(pageIndex, pageSize));
     }, [players]);
 
     const handleChangePage = (event: any, newPage: any) => {
         setPageIndex(newPage);
-        setDisplayedPlayers(players.filter((player: Player, index: number) => !(index - (newPage * pageSize) >= pageSize || index < (newPage * pageSize))));
+        setDisplayedPlayers(filterPlayers(newPage, pageSize));
     };
 
     const handleChangeRowsPerPage = (event: any) => {
-        setPageSize(Number(event.target.value))
-        setDisplayedPlayers(players.filter((player: Player, index: number) => !(index - (pageIndex * event.target.value) >= event.target.value || index < (pageIndex * event.target.value))));
+        setPageSize(Number(event.target.value));
+        setDisplayedPlayers(filterPlayers(pageIndex, event.target.value));
     };
 
     const handleSearchChange = (event: any) => {
