@@ -9,6 +9,7 @@ import TableRow from '@material-ui/core/TableRow'
 import {TableFooter, TablePagination, TextField} from "@material-ui/core";
 import TablePaginationActions from "@material-ui/core/TablePagination/TablePaginationActions";
 import {Player} from "../Player";
+import {Link} from "react-router-dom";
 
 /*
 Switch to a cloning system
@@ -24,7 +25,7 @@ const PlayersTable = ({players}: any) => {
 
     const filterPlayers = (pageIndex: number, pageSize: number) => {
         return players.filter((player: Player, index: number) => !(index - (pageIndex * pageSize) >= pageSize || index < (pageIndex * pageSize)));
-    }
+    };
 
     useEffect(() => {
         setDisplayedPlayers(filterPlayers(pageIndex, pageSize));
@@ -55,7 +56,11 @@ const PlayersTable = ({players}: any) => {
                     },
                     {
                         Header: 'All names',
-                        accessor: 'allNames'
+                        accessor: 'allNames',
+                        Cell: (cell: any) => {
+                            console.log(cell)
+                            return (<Link to={{ pathname: `/home/players/edit_player/${cell.row.values.id}` }}>{cell.value}</Link>);
+                        }
                     },
                     {
                         Header: 'Last name',
