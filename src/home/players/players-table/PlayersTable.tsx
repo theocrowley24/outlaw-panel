@@ -8,26 +8,27 @@ import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import {TableFooter, TablePagination, TextField} from "@material-ui/core";
 import TablePaginationActions from "@material-ui/core/TablePagination/TablePaginationActions";
-import {Player} from "../Player";
+import {Player, PlayerMapper} from "../Player";
 import {Link} from "react-router-dom";
+import PlayersService from "../PlayersService";
 
-/*
-Switch to a cloning system
-Add filter
-
-
- */
-
-const PlayersTable = ({players}: any) => {
+const PlayersTable = () => {
     const [pageSize, setPageSize] = useState(5);
     const [pageIndex, setPageIndex] = useState(0);
     const [displayedPlayers, setDisplayedPlayers] = useState([new Player(null)]);
+    const [players, setPlayers] = useState([new Player(null)]);
+
+    let playersService = new PlayersService();
 
     const filterPlayers = (pageIndex: number, pageSize: number) => {
         return players.filter((player: Player, index: number) => !(index - (pageIndex * pageSize) >= pageSize || index < (pageIndex * pageSize)));
     };
 
     useEffect(() => {
+        playersService.getAllPlayers().then((data: any) => {
+            setPlayers(PlayerMapper.map(data.data));
+        });
+
         setDisplayedPlayers(filterPlayers(pageIndex, pageSize));
     }, [players]);
 
@@ -58,7 +59,6 @@ const PlayersTable = ({players}: any) => {
                         Header: 'All names',
                         accessor: 'allNames',
                         Cell: (cell: any) => {
-                            console.log(cell)
                             return (<Link to={{ pathname: `/home/players/edit_player/${cell.row.values.id}` }}>{cell.value}</Link>);
                         }
                     },
@@ -123,9 +123,9 @@ const PlayersTable = ({players}: any) => {
             <TextField id="standard-basic" label="Search" onChange={handleSearchChange} />
             <MaUTable {...getTableProps()}>
                 <TableHead>
-                    {headerGroups.map(headerGroup => (
+                    {headerGroups.map((headerGroup, index) => (
                         <TableRow {...headerGroup.getHeaderGroupProps()}>
-                            {headerGroup.headers.map(column => (
+                            {headerGroup.headers.map((column, index) => (
                                 <TableCell {...column.getHeaderProps()}>
                                     {column.render('Header')}
                                 </TableCell>
@@ -138,7 +138,7 @@ const PlayersTable = ({players}: any) => {
                         prepareRow(row);
                         return (
                             <TableRow {...row.getRowProps()}>
-                                {row.cells.map(cell => {
+                                {row.cells.map((cell, index) => {
                                     return (
                                         <TableCell {...cell.getCellProps()}>
                                             {cell.render('Cell')}
@@ -156,7 +156,7 @@ const PlayersTable = ({players}: any) => {
                                 5,
                                 10,
                                 25,
-                                { label: 'All', value: data.length },
+                                { label: 'All', value: players.length },
                             ]}
                             count={players.length}
                             rowsPerPage={pageSize}

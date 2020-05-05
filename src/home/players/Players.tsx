@@ -1,24 +1,17 @@
-import React, {useEffect, useState} from "react";
-import PlayersService from "./PlayersService";
-import {Player, PlayerMapper} from "./Player";
+import React from "react";
 import PlayersTable from "./players-table/PlayersTable";
+import PrivateRoute from "../../auth/PrivateRoute";
+import {PermissionValue} from "../../permissions/PermissionChecker";
+import { Switch } from "react-router-dom";
+import EditPlayer from "./edit-player/EditPlayer";
 
 const Players = () => {
-    const [players, setPlayers] = useState([new Player(null)]);
-
-    let playersService = new PlayersService();
-
-    useEffect(() => {
-        playersService.getAllPlayers().then((data: any) => {
-           setPlayers(PlayerMapper.map(data.data));
-        });
-    }, []);
-
     return (
-        <div>
-            <PlayersTable players={players}/>
-        </div>
+        <Switch>
+            <PrivateRoute path={"/home/players"} permission={PermissionValue.ViewPlayers} component={PlayersTable} />
+            <PrivateRoute path={"/home/players/edit_player"} permission={PermissionValue.ViewPlayer} component={EditPlayer} />
+        </Switch>
     )
-}
+};
 
 export default Players;

@@ -25,13 +25,11 @@ const PrivateRoute = ({ component: Component, permission,...rest }: any) => {
                 permissionService.getUsersRank(parseInt(uid)).then((data: any) => {
                     permissionService.getAllPermissionsWithRank(data.data).then((data: any) => {
                         let temp = PermissionMapper.map(data.data);
-                        console.log(authData);
                         setState({loggingIn: false, flag: true, hasPermission: PermissionChecker.hasPermission(permission, temp), authVerified: authData.data});
                     });
                 });
             } else {
                 setState({loggingIn: false, flag: true, hasPermission: false, authVerified: false});
-                console.log("No UID");
             }
         });
 
