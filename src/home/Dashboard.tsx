@@ -8,9 +8,7 @@ import Groups from "./admin/Groups";
 const Dashboard = () => {
     return (
         <div className='wrapper'>
-            <div>
-                <SideBar/>
-            </div>
+            <SideBar/>
 
             <div className='content-wrapper'>
                 <Route path="/home/players" component={Players} />

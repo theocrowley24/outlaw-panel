@@ -133,8 +133,6 @@ const Groups = () => {
         setAllPermissions(temp);
     };
 
-
-
     const handleSetRankChange = (event: ChangeEvent<any>) => {
         let group: UserGroup | undefined = ranks.find(rank => rank.id === event.target.value);
         

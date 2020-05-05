@@ -9,7 +9,7 @@ const SideBar = () => {
     let user = authService.getUser();
 
     return (
-        <div className='wrapper'>
+        <div className='sidebar-wrapper'>
             <div className='content'>
                 <p className='medium-text'><span className="material-icons m-icon">dashboard</span>Outlaw panel</p>
                 <p>Welcome, {user?.username}</p>

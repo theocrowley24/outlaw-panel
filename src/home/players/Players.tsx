@@ -8,8 +8,8 @@ import EditPlayer from "./edit-player/EditPlayer";
 const Players = () => {
     return (
         <Switch>
-            <PrivateRoute path={"/home/players"} permission={PermissionValue.ViewPlayers} component={PlayersTable} />
             <PrivateRoute path={"/home/players/edit_player"} permission={PermissionValue.ViewPlayer} component={EditPlayer} />
+            <PrivateRoute path={"/home/players"} permission={PermissionValue.ViewPlayers} component={PlayersTable} />
         </Switch>
     )
 };

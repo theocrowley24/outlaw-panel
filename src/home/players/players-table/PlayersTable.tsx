@@ -59,7 +59,7 @@ const PlayersTable = () => {
                         Header: 'All names',
                         accessor: 'allNames',
                         Cell: (cell: any) => {
-                            return (<Link to={{ pathname: `/home/players/edit_player/${cell.row.values.id}` }}>{cell.value}</Link>);
+                            return (<Link to={{ pathname: `/home/players/edit_player?id=${cell.row.values.id}` }}>{cell.value}</Link>);
                         }
                     },
                     {
