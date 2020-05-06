@@ -1,4 +1,19 @@
-export class Player {
+export interface IPlayer {
+    id: number;
+    allNames: string;
+    lastName: string;
+    cash: number;
+    bank: number;
+    profession: string;
+    gear: string;
+    licenses: string;
+    natoRank: number;
+    alive: number;
+    adminLevel: number;
+
+}
+
+export class Player{
     public id: number;
     public allNames: string;
     public lastName: string;

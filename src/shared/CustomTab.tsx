@@ -13,7 +13,7 @@ const CustomTab = ({tabLabels, components}: {tabLabels: string[], components: an
         let view:any[] = [];
 
         for (let i = 0; i < tabLabels.length; i++) {
-            view.push(<Tab label={tabLabels[i]} />);
+            view.push(<Tab key={i} label={tabLabels[i]} />);
         }
 
         return view;
@@ -23,14 +23,14 @@ const CustomTab = ({tabLabels, components}: {tabLabels: string[], components: an
       let view:any[] = [];
 
       for (let i = 0; i < components.length; i++) {
-          view.push(<TabPanel value={value} index={i} component={components[i]} />);
+          view.push(<TabPanel key={i} value={value} index={i} component={components[i]} />);
       }
 
       return view;
     };
 
     return <div>
-        <AppBar position="static">
+        <AppBar position="static" color={"default"}>
             <Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
                 {TabLabels()}
             </Tabs>

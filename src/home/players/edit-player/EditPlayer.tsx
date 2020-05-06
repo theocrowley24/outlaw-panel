@@ -2,11 +2,10 @@ import React, {useEffect, useState} from "react";
 import "./EditPlayer.scss";
 import queryString from "query-string";
 import PlayersService from "../PlayersService";
-import {Player, PlayerMapper} from "../Player";
-import {AppBar, Tab, Tabs} from "@material-ui/core";
+import {Player} from "../Player";
 import CustomTab from "../../../shared/CustomTab";
-import Licenses from "./tabs/Licenses";
-import Stats from "./tabs/Stats";
+import Licenses from "./tabs/Licenses/Licenses";
+import Stats from "./tabs/Stats/Stats";
 
 const EditPlayer = (props: any) => {
   const [player, setPlayer] = useState(new Player(null));
@@ -21,82 +20,89 @@ const EditPlayer = (props: any) => {
     });
   }, []);
 
+  const StatsWrapper = () => {
+    return <Stats player={player}/>
+  };
+
   return <div>
-  <div className={"flex flex-wrap info-box-wrapper"}>
-    <div className={"info-box shadow"}>
-      <div className={"flex"}>
-        <div>
-          <p className={"info-value"}>${player.cash}</p>
-          <p>Cash</p>
-        </div>
+    <div className={"large-text gap-left-10"}>
+      {player.allNames}
+    </div>
+    <div className={"flex flex-wrap info-box-wrapper"}>
+      <div className={"info-box shadow"}>
+        <div className={"flex"}>
+          <div>
+            <p className={"info-value"}>${player.cash}</p>
+            <p>Cash</p>
+          </div>
 
-        <div className={"flex-right-align"}>
-          <span className="material-icons v-centre">
-          attach_money
-          </span>
+          <div className={"flex-right-align"}>
+            <span className="material-icons v-centre">
+            attach_money
+            </span>
+          </div>
+        </div>
+      </div>
+      <div className={"info-box shadow"}>
+        <div className={"flex"}>
+          <div>
+            <p className={"info-value"}>${player.bank}</p>
+            <p>Bank</p>
+          </div>
+
+          <div className={"flex-right-align"}>
+            <span className="material-icons v-centre">
+            account_balance
+            </span>
+          </div>
+        </div>
+      </div>
+      <div className={"info-box shadow"}>
+        <div className={"flex"}>
+          <div>
+            <p className={"info-value"}>{player.natoRank}</p>
+            <p>NATO Rank</p>
+          </div>
+
+          <div className={"flex-right-align"}>
+            <span className="material-icons v-centre">
+            pan_tool
+            </span>
+          </div>
+        </div>
+      </div>
+      <div className={"info-box shadow"}>
+        <div className={"flex"}>
+          <div>
+            <p className={"info-value"}>{player.adminLevel}</p>
+            <p>Admin Level</p>
+          </div>
+
+          <div className={"flex-right-align"}>
+            <span className="material-icons v-centre">
+            security
+            </span>
+          </div>
+        </div>
+      </div>
+      <div className={"info-box shadow"}>
+        <div className={"flex"}>
+          <div>
+            <p className={"info-value"}>{player.profession}</p>
+            <p>Profession</p>
+          </div>
+
+          <div className={"flex-right-align"}>
+            <span className="material-icons v-centre">
+            work
+            </span>
+          </div>
         </div>
       </div>
     </div>
-    <div className={"info-box shadow"}>
-      <div className={"flex"}>
-        <div>
-          <p className={"info-value"}>${player.bank}</p>
-          <p>Bank</p>
-        </div>
-
-        <div className={"flex-right-align"}>
-          <span className="material-icons v-centre">
-          account_balance
-          </span>
-        </div>
-      </div>
+    <div className={"tab-wrapper"}>
+      <CustomTab tabLabels={["Licenses", "Stats"]} components={[Licenses, StatsWrapper]}/>
     </div>
-    <div className={"info-box shadow"}>
-      <div className={"flex"}>
-        <div>
-          <p className={"info-value"}>{player.natoRank}</p>
-          <p>NATO Rank</p>
-        </div>
-
-        <div className={"flex-right-align"}>
-          <span className="material-icons v-centre">
-          pan_tool
-          </span>
-        </div>
-      </div>
-    </div>
-    <div className={"info-box shadow"}>
-      <div className={"flex"}>
-        <div>
-          <p className={"info-value"}>{player.adminLevel}</p>
-          <p>Admin Level</p>
-        </div>
-
-        <div className={"flex-right-align"}>
-          <span className="material-icons v-centre">
-          security
-          </span>
-        </div>
-      </div>
-    </div>
-    <div className={"info-box shadow"}>
-      <div className={"flex"}>
-        <div>
-          <p className={"info-value"}>{player.profession}</p>
-          <p>Profession</p>
-        </div>
-
-        <div className={"flex-right-align"}>
-          <span className="material-icons v-centre">
-          work
-          </span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-      <CustomTab tabLabels={["Licenses", "Stats"]} components={[Licenses, Stats]}/>
-
   </div>
 };
 
