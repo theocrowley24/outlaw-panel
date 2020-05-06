@@ -29,7 +29,7 @@ export class Player{
     constructor(data: any) {
         this.id = data?.id;
         this.allNames = data?.all_names;
-        this.lastName = data?.last_names;
+        this.lastName = data?.last_name;
         this.cash = data?.cash;
         this.bank = data?.bank;
         this.profession = data?.profession;

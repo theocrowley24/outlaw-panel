@@ -8,6 +8,10 @@ class PlayersService extends Service {
     public getPlayerById(playerId: number): Promise<any> {
         return this.postRequest('players/getPlayerById', {id: playerId});
     }
+
+    public updatePlayer(playerId: number, data: any): Promise<any> {
+        return this.postRequest('players/updatePlayer', {id: playerId, data: data});
+    }
 }
 
 export default PlayersService;

@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import "./Stats.scss";
 import {Button, TextField} from "@material-ui/core";
 import {Player} from "../../../Player";
+import PlayersService from "../../../PlayersService";
 
 interface IDictionary {
     [index: string]: string;
@@ -9,6 +10,8 @@ interface IDictionary {
 
 const Stats = ({player}: {player: Player}) => {
     const [updatedStats, setUpdatedStats] = useState({} as IDictionary);
+
+    let playersService = new PlayersService();
 
     const handleInputChange = (event: any) => {
         let newStats = updatedStats;
@@ -19,7 +22,9 @@ const Stats = ({player}: {player: Player}) => {
     };
 
     const handleUpdateButton = () => {
-        console.log(updatedStats);
+        playersService.updatePlayer(player.id, updatedStats).then(data => {
+            console.log(data);
+        });
     };
 
     return <div className={"stats-container"}>
