@@ -8,7 +8,16 @@ import {PermissionMapper} from "../home/admin/Permission";
 import Loading from "../loading/Loading";
 import {useCookies} from "react-cookie";
 
-const PrivateRoute = ({ component: Component, permission,...rest }: any) => {
+// @ts-ignore
+import ToastServive from 'react-material-toast';
+const toast = ToastServive.new({
+    place:'topRight',
+    duration:2,
+    maxCount:8
+});
+
+
+const PrivateRoute = ({ component: Component, permission, ...rest }: any) => {
     const [cookies, setCookie, removeCookie] = useCookies(['uid']);
     const [verified, setVerified] = useState({verified: false, loading: true});
     const [hasPermission, setHasPermission] = useState({hasPermission: false, loading: true});
@@ -21,6 +30,9 @@ const PrivateRoute = ({ component: Component, permission,...rest }: any) => {
         authService.verify().then(verifiedData => {
             if (verifiedData.data) {
                 setVerified({verified: verifiedData.data.verified, loading: false});
+            } else {
+                toast.error(verifiedData.message);
+                setVerified({verified: false, loading: false});
             }
         });
 
@@ -28,6 +40,12 @@ const PrivateRoute = ({ component: Component, permission,...rest }: any) => {
         permissionService.userHasPermission(cookies['uid'], permission).then(permissionData => {
             if (permissionData.data) {
                 setHasPermission({hasPermission: permissionData.data.hasPermission, loading: false});
+
+                if (!permissionData.data.hasPermission) {
+                    toast.error("You do not have permission to view this.");
+                }
+            } else {
+                setHasPermission({hasPermission: false, loading: false});
             }
         });
     }, []);
