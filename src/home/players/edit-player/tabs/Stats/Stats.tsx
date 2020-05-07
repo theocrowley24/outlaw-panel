@@ -22,8 +22,7 @@ const Stats = ({player}: {player: Player}) => {
     };
 
     const handleUpdateButton = () => {
-        playersService.updatePlayer(player.id, updatedStats).then(data => {
-            console.log(data);
+        playersService.updatePlayer(player.id, updatedStats).then(() => {
         });
     };
 
@@ -58,6 +57,7 @@ const Stats = ({player}: {player: Player}) => {
                 <TextField
                     className={"player-stat"}
                     onChange={handleInputChange}
+                    type={"number"}
                     id="bank"
                     label="Bank"
                     defaultValue={player.bank || ""} />
@@ -76,18 +76,21 @@ const Stats = ({player}: {player: Player}) => {
                 <TextField
                     className={"player-stat"}
                     onChange={handleInputChange}
+                    type={"number"}
                     id="natoRank"
                     label="NATO Rank"
                     defaultValue={player.natoRank || ""} />
                 <TextField
                     className={"player-stat"}
                     onChange={handleInputChange}
+                    type={"number"}
                     id="alive"
                     label="Alive"
                     defaultValue={player.alive || ""} />
                 <TextField
                     className={"player-stat"}
                     onChange={handleInputChange}
+                    type={"number"}
                     id="adminLevel"
                     label="Admin level"
                     defaultValue={player.adminLevel || ""} />

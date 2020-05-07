@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import './PlayersTable';
+import './PlayersTable.scss';
 import {useTable} from "react-table";
 import MaUTable from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody'
@@ -9,41 +9,46 @@ import TableRow from '@material-ui/core/TableRow'
 import {TableFooter, TablePagination, TextField} from "@material-ui/core";
 import TablePaginationActions from "@material-ui/core/TablePagination/TablePaginationActions";
 import {Player, PlayerMapper} from "../Player";
-import {Link} from "react-router-dom";
 import PlayersService from "../PlayersService";
 
-const PlayersTable = () => {
+const PlayersTable = (props: any) => {
     const [pageSize, setPageSize] = useState(5);
     const [pageIndex, setPageIndex] = useState(0);
     const [displayedPlayers, setDisplayedPlayers] = useState([new Player(null)]);
     const [players, setPlayers] = useState([new Player(null)]);
+    const [searchTerm, setSearchTerm] = useState("");
 
     let playersService = new PlayersService();
 
-    const filterPlayers = (pageIndex: number, pageSize: number) => {
-        return players.filter((player: Player, index: number) => !(index - (pageIndex * pageSize) >= pageSize || index < (pageIndex * pageSize)));
+    const getCountBySearchTerm = () => {
+      return players.filter((player: Player) => player.allNames.indexOf(searchTerm) >= 0).length;
+    };
+
+    const filterPlayers = (searchTerm: string, players: Player[], pageIndex: number, pageSize: number) => {
+        return players.filter((player: Player, index: number) => (player.allNames.indexOf(searchTerm) >= 0))
+            .filter((player: Player, index: number) => !(index - (pageIndex * pageSize) >= pageSize || index < (pageIndex * pageSize)));
     };
 
     useEffect(() => {
         playersService.getAllPlayers().then((data: any) => {
             setPlayers(PlayerMapper.map(data.data));
+            setDisplayedPlayers(filterPlayers(searchTerm, PlayerMapper.map(data.data), pageIndex, pageSize));
         });
-
-        setDisplayedPlayers(filterPlayers(pageIndex, pageSize));
-    }, [players]);
+    }, []);
 
     const handleChangePage = (event: any, newPage: any) => {
         setPageIndex(newPage);
-        setDisplayedPlayers(filterPlayers(newPage, pageSize));
+        setDisplayedPlayers(filterPlayers(searchTerm, players, newPage, pageSize));
     };
 
     const handleChangeRowsPerPage = (event: any) => {
         setPageSize(Number(event.target.value));
-        setDisplayedPlayers(filterPlayers(pageIndex, event.target.value));
+        setDisplayedPlayers(filterPlayers(searchTerm, players, pageIndex, event.target.value));
     };
 
     const handleSearchChange = (event: any) => {
-        setDisplayedPlayers(players.filter((player: Player) => player.allNames.indexOf(event.target.value) >= 0));
+        setDisplayedPlayers(filterPlayers(event.target.value, players, pageIndex, pageSize));
+        setSearchTerm(event.target.value);
     };
 
     const columns = React.useMemo(
@@ -59,7 +64,9 @@ const PlayersTable = () => {
                         Header: 'All names',
                         accessor: 'allNames',
                         Cell: (cell: any) => {
-                            return (<Link to={{ pathname: `/home/players/edit_player?id=${cell.row.values.id}` }}>{cell.value}</Link>);
+                            return (<div className={"player-name"} onClick={() => props.history.push(`/home/players/edit_player?id=${cell.row.values.id}`)} >
+                                <p>{cell.value}</p>
+                            </div>);
                         }
                     },
                     {
@@ -158,7 +165,7 @@ const PlayersTable = () => {
                                 25,
                                 { label: 'All', value: players.length },
                             ]}
-                            count={players.length}
+                            count={searchTerm !== "" ? getCountBySearchTerm() : players.length}
                             rowsPerPage={pageSize}
                             page={pageIndex}
                             SelectProps={{
