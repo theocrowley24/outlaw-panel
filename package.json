@@ -19,6 +19,7 @@
     "react": "^16.13.1",
     "react-cookie": "^4.0.3",
     "react-dom": "^16.13.1",
+    "react-material-toast": "^16.1.7",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
     "react-table": "^7.0.4",

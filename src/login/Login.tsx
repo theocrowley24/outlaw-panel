@@ -3,6 +3,14 @@ import './Login.scss';
 import { TextField, Grid, Container, Box, CssBaseline, Avatar, Typography, FormControlLabel, Checkbox, Button, Link, makeStyles } from '@material-ui/core';
 import { Redirect } from "react-router-dom";
 import AuthService from "../auth/AuthService";
+// @ts-ignore
+import ToastServive from 'react-material-toast';
+const toast = ToastServive.new({
+  place:'topRight',
+  duration:2,
+  maxCount:8
+});
+
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -40,7 +48,10 @@ const Login = (props: any) => {
 
     authService.login(username, password).then((data) => {
       if (data.statusCode === 200) {
+        toast.success("Welcome");
           props.history.push('/home');
+      } else {
+        toast.error(data.message);
       }
     });
   };
