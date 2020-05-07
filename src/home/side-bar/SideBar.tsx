@@ -5,7 +5,7 @@ import {Link} from "react-router-dom";
 
 const SideBar = () => {
     let authService = new AuthService();
-    
+
     let user = authService.getUser();
 
     return (

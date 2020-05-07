@@ -31,7 +31,7 @@ const Login = (props: any) => {
 
   let authService = new AuthService();
 
-  if (authService.isLoggedIn()) return <Redirect to="/home"/>;
+  //if (authService.isLoggedIn()) return <Redirect to="/home"/>;
 
   const handleSubmit = (event: any): void => {
     event.preventDefault();
@@ -39,18 +39,8 @@ const Login = (props: any) => {
     let authService = new AuthService();
 
     authService.login(username, password).then((data) => {
-      let content = data.data;
-
-      let redirected = false;
-
       if (data.statusCode === 200) {
-        localStorage.setItem("accessToken", content.accessToken);
-        localStorage.setItem("uid", content.uid);
-
-        if (!redirected) {
-          redirected = true;
           props.history.push('/home');
-        }
       }
     });
   };
@@ -122,6 +112,6 @@ const Login = (props: any) => {
       </Box>
     </Container>
   );
-}
+};
 
 export default Login;

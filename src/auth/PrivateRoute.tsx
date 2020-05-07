@@ -6,46 +6,43 @@ import PermissionChecker from "../permissions/PermissionChecker";
 import PermissionService from "../services/PermissionsService";
 import {PermissionMapper} from "../home/admin/Permission";
 import Loading from "../loading/Loading";
+import {useCookies} from "react-cookie";
 
 const PrivateRoute = ({ component: Component, permission,...rest }: any) => {
-    const [state, setState] = useState({loggingIn: false, flag: false, hasPermission: false, authVerified: false});
+    const [cookies, setCookie, removeCookie] = useCookies(['uid']);
+    const [verified, setVerified] = useState({verified: false, loading: true});
+    const [hasPermission, setHasPermission] = useState({hasPermission: false, loading: true});
 
     let authService = new AuthService();
     let permissionService = new PermissionService();
 
     useEffect(() => {
-        let uid = localStorage.getItem("uid"); // TODO Replace local storage with a cookie
-
-        if (!uid) {
-            setState({loggingIn: true, flag: false, hasPermission: false, authVerified: false});
-        }
-
-        authService.verify().then((authData: any) => {
-            if (uid) {
-                permissionService.getUsersRank(parseInt(uid)).then((data: any) => {
-                    permissionService.getAllPermissionsWithRank(data.data).then((data: any) => {
-                        let temp = PermissionMapper.map(data.data);
-                        setState({loggingIn: false, flag: true, hasPermission: PermissionChecker.hasPermission(permission, temp), authVerified: authData.data});
-                    });
-                });
-            } else {
-                setState({loggingIn: false, flag: true, hasPermission: false, authVerified: false});
+        // Verify with api
+        authService.verify().then(verifiedData => {
+            if (verifiedData.data) {
+                setVerified({verified: verifiedData.data.verified, loading: false});
             }
         });
 
-    }, [permission]);
+        // Check permissions
+        permissionService.userHasPermission(cookies['uid'], permission).then(permissionData => {
+            if (permissionData.data) {
+                setHasPermission({hasPermission: permissionData.data.hasPermission, loading: false});
+            }
+        });
+    }, []);
 
-    if (!state.flag && !state.loggingIn) {
+    if (hasPermission.loading || verified.loading) {
         return <Loading />
     } else {
         return (
             <Route {...rest} render={(props: JSX.IntrinsicAttributes) => (
-                authService.isLoggedIn() && state.hasPermission && state.authVerified
+                hasPermission.hasPermission && verified.verified
                     ? <Component {...props} />
                     : <Redirect to='/login' />
             )} />
         );
     }
-}
+};
 
 export default PrivateRoute;

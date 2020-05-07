@@ -7,11 +7,7 @@ class AuthService extends Service {
     }
 
     public verify(): Promise<any> {
-        let token = localStorage.getItem("accessToken");
-
-        if (token) return this.postRequest("auth/verify", {accessToken: token});
-
-        return new Promise<any>(() => "Verification failed");
+        return this.getRequest("auth/verify");
     }
 
     public isLoggedIn(): boolean {
