@@ -1,8 +1,12 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import "./Stats.scss";
 import {Button, TextField} from "@material-ui/core";
 import {Player} from "../../../Player";
 import PlayersService from "../../../PlayersService";
+import PermissionService from "../../../../../services/PermissionsService";
+import PermissionChecker, {PermissionValue} from "../../../../../permissions/PermissionChecker";
+import {PermissionMapper} from "../../../../admin/Permission";
+import Loading from "../../../../../loading/Loading";
 
 interface IDictionary {
     [index: string]: string;
@@ -10,14 +14,16 @@ interface IDictionary {
 
 const Stats = ({player}: {player: Player}) => {
     const [updatedStats, setUpdatedStats] = useState({} as IDictionary);
+    const [hasPermission, setHasPermission] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     let playersService = new PlayersService();
+    let permissionService = new PermissionService();
 
     const handleInputChange = (event: any) => {
         let newStats = updatedStats;
         newStats[event.target.id] = event.target.value;
         setUpdatedStats(newStats);
-        //console.log(event.target.id)
         player[event.target.id] = event.target.value;
     };
 
@@ -25,6 +31,23 @@ const Stats = ({player}: {player: Player}) => {
         playersService.updatePlayer(player.id, updatedStats).then(() => {
         });
     };
+
+    useEffect(() => {
+        permissionService.userHasPermission(Number(localStorage.getItem("uid")), PermissionValue.UpdatePlayer).then(data => {
+            setHasPermission(data.data.hasPermission);
+            setLoading(false);
+        });
+    }, []);
+
+    if(loading) {
+        return <Loading/>
+    }
+
+    if (!hasPermission) {
+        return <div className={"stats-container"}>
+            You do not have permission to edit players
+        </div>
+    }
 
     return <div className={"stats-container"}>
         <form>

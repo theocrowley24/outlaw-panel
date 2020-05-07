@@ -9,6 +9,7 @@ class PermissionChecker {
 export enum PermissionValue {
     ViewPlayers = 1,
     ViewPlayer = 2,
+    UpdatePlayer = 17,
     Dashboard = 3
 }
 

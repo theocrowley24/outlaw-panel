@@ -1,6 +1,10 @@
 import Service from "./Service";
 
 class PermissionService extends Service {
+    public userHasPermission(userId: number, permissionId: number): Promise<any> {
+        return this.postRequest("permissions/userHasPermission", {userId: userId, permissionId: permissionId});
+    }
+
     public getUsersRank(id: number): Promise<any> {
         return this.postRequest("permissions/getUsersRank", {id: id});
     }
