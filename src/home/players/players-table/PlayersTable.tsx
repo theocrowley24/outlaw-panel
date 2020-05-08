@@ -111,6 +111,8 @@ const PlayersTable = (props: any) => {
         [],
     );
 
+    console.log(columns)
+
     const data = React.useMemo(
         () => {
             return displayedPlayers;

@@ -3,7 +3,7 @@ import "./EditPlayer.scss";
 import queryString from "query-string";
 import PlayersService from "../PlayersService";
 import {Player} from "../Player";
-import CustomTab from "../../../shared/CustomTab";
+import CustomTab from "../../../shared/custom-tab/CustomTab";
 import Licenses from "./tabs/Licenses/Licenses";
 import Stats from "./tabs/Stats/Stats";
 

@@ -10,23 +10,8 @@ class AuthService extends Service {
         return this.getRequest("auth/verify");
     }
 
-    public isLoggedIn(): boolean {
-        return localStorage.getItem("accessToken") != null;
-    }
-
-    public getUser(): User | null {
-      let temp = localStorage.getItem('user');
-
-      if (temp != null) {
-        return JSON.parse(temp);
-      }
-
-      return null;
-    }
-
-    public logout(): void {
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("uid");
+    public getUser(): Promise<any> {
+      return this.getRequest("auth/getMyInfo");
     }
 }
 

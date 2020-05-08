@@ -1,12 +1,23 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import './SideBar.scss';
 import AuthService from "../../auth/AuthService";
-import {Link} from "react-router-dom";
+import {Link, withRouter} from "react-router-dom";
 
-const SideBar = () => {
+const SideBar = (props: any) => {
+    const [user, setUser] = useState({username: ""});
+
+
     let authService = new AuthService();
 
-    let user = authService.getUser();
+    useEffect(() => {
+        authService.getUser().then(userData => {
+           setUser(userData.data);
+        });
+    }, []);
+
+    const handleLogout = () => {
+        props.history.push("/logout");
+    };
 
     return (
         <div className='sidebar-wrapper'>
@@ -41,7 +52,7 @@ const SideBar = () => {
                         settings
                     </span>
 
-                    <span className="material-icons">
+                    <span className="material-icons pointer" onClick={handleLogout}>
                         exit_to_app
                     </span> 
                 </div>                
@@ -50,4 +61,4 @@ const SideBar = () => {
     )
 };
 
-export default SideBar;
+export default withRouter(SideBar);

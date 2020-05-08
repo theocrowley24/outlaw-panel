@@ -1,13 +1,15 @@
 import React from "react";
-import AuthService from "../auth/AuthService";
+import {useCookies} from "react-cookie";
 
 const Logout = () => {
-    let authService = new AuthService();
-    authService.logout();
+    const [cookies, setCookie, removeCookie] = useCookies(['uid', 'authToken']);
+
+    removeCookie('uid');
+    removeCookie('authToken');
 
     return (
         <div>Logged out</div>
     );
-}
+};
 
 export default Logout;
