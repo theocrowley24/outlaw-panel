@@ -8,7 +8,6 @@ import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import {TableFooter, TablePagination, TextField} from "@material-ui/core";
 import TablePaginationActions from "@material-ui/core/TablePagination/TablePaginationActions";
-import {PlayerMapper} from "../../home/players/Player";
 
 const CustomTable = ({columns, allRows, searchField}: {columns: any, allRows: any, searchField: string}) => {
     const [pageSize, setPageSize] = useState(5);
@@ -18,7 +17,7 @@ const CustomTable = ({columns, allRows, searchField}: {columns: any, allRows: an
 
     useEffect(() => {
         setDisplayedRows(filterRows(searchTerm, allRows, pageIndex, pageSize));
-    }, []);
+    }, [allRows]);
 
     const getCountBySearchTerm = () => {
         return allRows.filter((row: any) => String(row[searchField]).indexOf(searchTerm) >= 0).length;

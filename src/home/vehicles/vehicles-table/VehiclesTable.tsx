@@ -73,7 +73,6 @@ const VehiclesTable = (props: any) => {
         [vehicles]
     );
 
-    console.log(data)
 
     let playersService = new PlayersService();
 
@@ -84,7 +83,7 @@ const VehiclesTable = (props: any) => {
     }, []);
 
     return <div>
-        <CustomTable key={data.length} columns={columns} allRows={data} searchField={"allNames"} />
+        <CustomTable columns={columns} allRows={data} searchField={"allNames"} />
     </div>
 };
 
