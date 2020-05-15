@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from "react";
+import './UsersTable.scss';
 import {UsersService} from "../UsersService";
 import {User, UserMapper} from "../../../../auth/User";
 import CustomTable from "../../../../shared/custom-table/CustomTable";
@@ -16,7 +17,7 @@ const UsersTable = (props: any) => {
     const columns = React.useMemo(
         () => [
             {
-                Header: 'Vehicles',
+                Header: 'Users',
                 columns: [
                     {
                         Header: 'id',
