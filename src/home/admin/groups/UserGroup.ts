@@ -3,7 +3,7 @@ export class UserGroup {
     public name: string;
     public permissions: any[];
 
-    constructor(data: any) {
+    constructor(data?: any) {
         this.id = data?.id;
         this.name = data?.name;
         this.permissions = data?.permissions;

@@ -1,4 +1,3 @@
-import User from "./User";
 import Service from "../services/Service";
 
 class AuthService extends Service {

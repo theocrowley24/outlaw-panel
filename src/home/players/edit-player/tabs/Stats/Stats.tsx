@@ -3,7 +3,7 @@ import "./Stats.scss";
 import {Button, TextField} from "@material-ui/core";
 import {Player} from "../../../Player";
 import PlayersService from "../../../PlayersService";
-import PermissionService from "../../../../../services/PermissionsService";
+import PermissionService from "../../../../admin/groups/PermissionsService";
 import PermissionChecker, {PermissionValue} from "../../../../../permissions/PermissionChecker";
 import {PermissionMapper} from "../../../../admin/Permission";
 import Loading from "../../../../../loading/Loading";

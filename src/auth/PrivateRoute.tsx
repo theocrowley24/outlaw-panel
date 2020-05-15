@@ -3,7 +3,7 @@ import React from "react";
 import { Redirect, Route } from "react-router-dom";
 import AuthService from "./AuthService";
 import PermissionChecker from "../permissions/PermissionChecker";
-import PermissionService from "../services/PermissionsService";
+import PermissionService from "../home/admin/groups/PermissionsService";
 import {PermissionMapper} from "../home/admin/Permission";
 import Loading from "../loading/Loading";
 import {useCookies} from "react-cookie";

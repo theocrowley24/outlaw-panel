@@ -1,11 +1,11 @@
 import React, { useState, useEffect, ChangeEvent } from "react";
 import './Groups.scss';
-import PermissionService from "../../services/PermissionsService";
 import { UserGroupMapper, UserGroup } from "./UserGroup";
 import { Select, MenuItem, Dialog, DialogTitle, DialogContent, Button, TextField, Tabs, Tab, FormControlLabel, Checkbox, Snackbar } from "@material-ui/core";
-import { Permission, PermissionMapper } from "./Permission";
 import Alert from '@material-ui/lab/Alert';
-import {PermissionGroup, PermissionGroupMapper} from "./PermissionGroup";
+import PermissionService from "./PermissionsService";
+import {Permission, PermissionMapper} from "../Permission";
+import {PermissionGroup, PermissionGroupMapper} from "../PermissionGroup";
 
 const Groups = () => {
     let permissionService = new PermissionService();

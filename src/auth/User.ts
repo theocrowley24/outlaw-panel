@@ -1,13 +1,29 @@
-class User {
-    public id: number | undefined;
-    public username: string | undefined;
-    public accessToken: string | undefined;
+import {UserGroup} from "../home/admin/groups/UserGroup";
 
-    constructor(id: number, username: string, accessToken: string) {
-        this.id = id;
-        this.username = username;
-        this.accessToken = accessToken;
+export class User {
+    public id: number;
+    public username: string;
+    public userGroup: UserGroup;
+
+    constructor (data: any) {
+        this.id = data?.id;
+        this.username = data?.username;
+
+        this.userGroup = new UserGroup();
+        this.userGroup.id = data?.rank_id;
+        this.userGroup.name = data?.rank_name;
     }
 }
 
-export default User;
+export class UserMapper {
+    public static map(data: any[]): User[] {
+        let users = [];
+
+        for (let i = 0; i < data.length; i++) {
+            users.push(new User(data[i]));
+        }
+
+        return users;
+    }
+}
+

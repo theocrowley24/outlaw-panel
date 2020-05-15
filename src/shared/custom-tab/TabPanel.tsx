@@ -4,7 +4,7 @@ const TabPanel = ({index, value, component: Component}: {index: number, value: n
     if (index === value) {
         return <Component />
     } else {
-        return <div></div>
+        return <div/>
     }
 };
 

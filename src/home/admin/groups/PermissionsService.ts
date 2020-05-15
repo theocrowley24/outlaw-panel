@@ -1,4 +1,4 @@
-import Service from "./Service";
+import Service from "../../../services/Service";
 
 class PermissionService extends Service {
     public userHasPermission(userId: number, permissionId: number): Promise<any> {

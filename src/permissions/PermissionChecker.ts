@@ -10,7 +10,10 @@ export enum PermissionValue {
     ViewPlayers = 1,
     ViewPlayer = 2,
     UpdatePlayer = 17,
-    Dashboard = 3
+    Dashboard = 3,
+    ViewUsers = 20,
+    ViewUser = 22,
+    UpdateUser = 21
 }
 
 export default PermissionChecker;

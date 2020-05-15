@@ -2,63 +2,62 @@ import React, {useEffect, useState} from "react";
 import CustomTable from "../../../shared/custom-table/CustomTable";
 import {Player, PlayerMapper} from "../../players/Player";
 import PlayersService from "../../players/PlayersService";
+import {VehiclesService} from "../VehiclesService";
+import Vehicles from "../Vehicles";
+import {Vehicle, VehicleMapper} from "../Vehicle";
 
 const VehiclesTable = (props: any) => {
-    const [vehicles, setVehicles] = useState([new Player(null)]);
+    const [vehicles, setVehicles] = useState([new Vehicle(null)]);
 
     const columns = React.useMemo(
         () => [
             {
-                Header: 'Players',
+                Header: 'Vehicles',
                 columns: [
                     {
                         Header: 'id',
                         accessor: 'id'
                     },
                     {
-                        Header: 'All names',
-                        accessor: 'allNames',
+                        Header: 'Owner',
+                        accessor: 'owner',
                         Cell: (cell: any) => {
-                            return (<div className={"player-name"} onClick={() => props.history.push(`/home/players/edit_player?id=${cell.row.values.id}`)} >
+                            return (<div className={"vehicle-name"} onClick={() => props.history.push(`/home/vehicles/edit_vehicle?id=${cell.row.values.id}`)} >
                                 <p>{cell.value}</p>
                             </div>);
                         }
                     },
                     {
-                        Header: 'Last name',
-                        accessor: 'lastName'
+                        Header: 'Class name',
+                        accessor: 'className'
                     },
                     {
-                        Header: 'Cash',
-                        accessor: 'cash'
+                        Header: 'Inventory',
+                        accessor: 'inventory'
                     },
                     {
-                        Header: 'Bank',
-                        accessor: 'bank'
+                        Header: 'Status',
+                        accessor: 'status'
                     },
                     {
-                        Header: 'Profession',
-                        accessor: 'profession'
+                        Header: 'Color',
+                        accessor: 'color'
                     },
                     {
-                        Header: 'Gear',
-                        accessor: 'gear'
+                        Header: 'Active',
+                        accessor: 'active'
                     },
                     {
-                        Header: 'Licenses',
-                        accessor: 'licenses'
+                        Header: 'Impounded',
+                        accessor: 'impounded'
                     },
                     {
-                        Header: 'NATO rank',
-                        accessor: 'natoRank'
+                        Header: 'Destroyed',
+                        accessor: 'destroyed'
                     },
                     {
-                        Header: 'Admin level',
-                        accessor: 'adminLevel'
-                    },
-                    {
-                        Header: 'Alive',
-                        accessor: 'alive'
+                        Header: 'Garage',
+                        accessor: 'garage'
                     }
                 ]
             }
@@ -73,12 +72,11 @@ const VehiclesTable = (props: any) => {
         [vehicles]
     );
 
-
-    let playersService = new PlayersService();
+    let vehiclesService = new VehiclesService();
 
     useEffect(() => {
-        playersService.getAllPlayers().then((data: any) => {
-            setVehicles(PlayerMapper.map(data.data));
+        vehiclesService.getAllVehicles().then((data: any) => {
+            setVehicles(VehicleMapper.map(data.data));
         });
     }, []);
 
