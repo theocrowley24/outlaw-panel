@@ -3,27 +3,27 @@
  */
 
 import React from "react";
-import "./Licenses.scss";
+import './Gear.scss';
 import {Player} from "../../../Player";
 import {ListItem, ListItemText} from "@material-ui/core";
 
-const Licenses = ({player}: { player: Player }) => {
-    const licenses = () => {
+const Gear = ({player}: { player: Player }) => {
+    const gear = () => {
         let view: any[] = [];
 
         // @ts-ignore
-        player.licenses.match(/`(.*?)`/g).forEach((element, index) => {
+        player.gear.match(/\[(.*?)\]/g).forEach((element, index) => {
             view.push(<ListItem key={index}><ListItemText>{element}</ListItemText></ListItem>);
         });
 
         return view;
     };
 
-    return <div className={"licenses-container"}>
-        <div className={"licenses"}>
-            {licenses()}
+    return <div className={"gear-container"}>
+        <div className={"gear"}>
+            {gear()}
         </div>
     </div>
 };
 
-export default Licenses;
+export default Gear;

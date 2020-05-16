@@ -12,6 +12,7 @@ import Vehicles from "./vehicles/Vehicles";
 import Users from "./admin/users/Users";
 import PrivateRoute from "../auth/PrivateRoute";
 import {PermissionValue} from "../permissions/PermissionChecker";
+import Root from "./root/Root";
 
 const Dashboard = () => {
     const getYear = () => {
@@ -23,6 +24,7 @@ const Dashboard = () => {
             <SideBar/>
 
             <div className='content-wrapper'>
+                <Route exact path={"/home"} component={Root}/>
                 <Route path="/home/players" component={Players}/>
                 <Route path="/home/vehicles" component={Vehicles}/>
                 <Route path="/home/admin/users" component={Users}/>

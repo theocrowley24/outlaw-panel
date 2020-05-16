@@ -11,6 +11,7 @@ import CustomTab from "../../../shared/custom-tab/CustomTab";
 import Licenses from "./tabs/licenses/Licenses";
 import Stats from "./tabs/stats/Stats";
 import Transactions from "./tabs/transactions/Transactions";
+import Gear from "./tabs/gear/Gear";
 
 const EditPlayer = (props: any) => {
     const [player, setPlayer] = useState(new Player(null));
@@ -31,6 +32,14 @@ const EditPlayer = (props: any) => {
 
     const TransactionsWrapper = () => {
         return <Transactions player={player}/>
+    };
+
+    const GearWrapper = () => {
+        return <Gear player={player}/>
+    };
+
+    const LicensesWrapper = () => {
+        return <Licenses player={player}/>
     };
 
     return <div>
@@ -138,7 +147,7 @@ const EditPlayer = (props: any) => {
             </div>
         </div>
         <div className={"tab-wrapper"}>
-            <CustomTab tabLabels={["Stats", "Licenses", "Transactions"]} components={[StatsWrapper, Licenses, TransactionsWrapper]}/>
+            <CustomTab tabLabels={["Stats", "Licenses", "Transactions", "Gear"]} components={[StatsWrapper, LicensesWrapper, TransactionsWrapper, GearWrapper]}/>
         </div>
     </div>
 };

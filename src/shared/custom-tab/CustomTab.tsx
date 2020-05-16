@@ -42,6 +42,6 @@ const CustomTab = ({tabLabels, components}: { tabLabels: string[], components: a
         {TabPanels()}
 
     </div>
-}
+};
 
 export default CustomTab;
