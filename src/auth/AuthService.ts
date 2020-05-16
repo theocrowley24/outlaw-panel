@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2020, Theo Crowley. All rights reserved.
+ */
+
 import Service from "../services/Service";
 
 class AuthService extends Service {
@@ -10,7 +14,7 @@ class AuthService extends Service {
     }
 
     public getUser(): Promise<any> {
-      return this.getRequest("auth/getMyInfo");
+        return this.getRequest("auth/getMyInfo");
     }
 }
 

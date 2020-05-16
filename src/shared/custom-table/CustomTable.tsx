@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2020, Theo Crowley. All rights reserved.
+ */
+
 import React, {useEffect, useState} from "react";
 import './CustomTable.scss';
 import {useTable} from "react-table";
@@ -9,7 +13,7 @@ import TableRow from '@material-ui/core/TableRow'
 import {TableFooter, TablePagination, TextField} from "@material-ui/core";
 import TablePaginationActions from "@material-ui/core/TablePagination/TablePaginationActions";
 
-const CustomTable = ({columns, allRows, searchField}: {columns: any, allRows: any, searchField: string}) => {
+const CustomTable = ({columns, allRows, searchField}: { columns: any, allRows: any, searchField: string }) => {
     const [pageSize, setPageSize] = useState(5);
     const [pageIndex, setPageIndex] = useState(0);
     const [displayedRows, setDisplayedRows] = useState([]);
@@ -56,10 +60,10 @@ const CustomTable = ({columns, allRows, searchField}: {columns: any, allRows: an
         headerGroups,
         rows,
         prepareRow
-    } = useTable({ columns, data });
+    } = useTable({columns, data});
 
-    return  <div className={"table-container"}>
-        <TextField id="standard-basic" label="Search" onChange={handleSearchChange} />
+    return <div className={"table-container"}>
+        <TextField id="standard-basic" label="Search" onChange={handleSearchChange}/>
         <MaUTable {...getTableProps()}>
             <TableHead>
                 {headerGroups.map((headerGroup, index) => (
@@ -95,13 +99,13 @@ const CustomTable = ({columns, allRows, searchField}: {columns: any, allRows: an
                             5,
                             10,
                             25,
-                            { label: 'All', value: allRows.length },
+                            {label: 'All', value: allRows.length},
                         ]}
                         count={searchTerm !== "" ? getCountBySearchTerm() : allRows.length}
                         rowsPerPage={pageSize}
                         page={pageIndex}
                         SelectProps={{
-                            inputProps: { 'aria-label': 'rows per page' },
+                            inputProps: {'aria-label': 'rows per page'},
                             native: true,
                         }}
                         onChangePage={handleChangePage}

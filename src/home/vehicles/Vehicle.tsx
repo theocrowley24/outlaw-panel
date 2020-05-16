@@ -1,4 +1,6 @@
-import {Player} from "../players/Player";
+/*
+ * Copyright (c) 2020, Theo Crowley. All rights reserved.
+ */
 
 export class Vehicle {
     public id: number;

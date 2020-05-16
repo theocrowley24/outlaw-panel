@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2020, Theo Crowley. All rights reserved.
+ */
+
 import React, {useEffect, useState} from "react";
 import './EditUser.scss';
 import queryString from "query-string";
@@ -6,13 +10,13 @@ import {User} from "../../../../auth/User";
 import {Button, FormControlLabel, InputLabel, MenuItem, Paper, Select, Switch, TextField} from "@material-ui/core";
 import {UserGroup, UserGroupMapper} from "../../groups/UserGroup";
 import PermissionService from "../../groups/PermissionsService";
-
 // @ts-ignore
 import ToastServive from 'react-material-toast';
+
 const toast = ToastServive.new({
-    place:'topRight',
-    duration:2,
-    maxCount:8
+    place: 'topRight',
+    duration: 2,
+    maxCount: 8
 });
 
 const EditUser = (props: any) => {
@@ -70,13 +74,13 @@ const EditUser = (props: any) => {
     };
 
     const UserGroups = () => {
-      let view = [];
+        let view = [];
 
-      for (let i = 0; i < userGroups.length; i++) {
-          view.push(<MenuItem key={i} value={userGroups[i].id}>{userGroups[i].name}</MenuItem>)
-      }
+        for (let i = 0; i < userGroups.length; i++) {
+            view.push(<MenuItem key={i} value={userGroups[i].id}>{userGroups[i].name}</MenuItem>)
+        }
 
-      return view;
+        return view;
     };
 
     return <div>
@@ -103,7 +107,8 @@ const EditUser = (props: any) => {
 
                 <div>
                     <FormControlLabel
-                        control={<Switch checked={accountDeactivated} onChange={handleAccountDeactivationChange} color="primary" />}
+                        control={<Switch checked={accountDeactivated} onChange={handleAccountDeactivationChange}
+                                         color="primary"/>}
                         label="Account deactivated"
                         labelPlacement="end"
                     />

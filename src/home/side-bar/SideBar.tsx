@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2020, Theo Crowley. All rights reserved.
+ */
+
 import React, {useEffect, useState} from "react";
 import './SideBar.scss';
 import AuthService from "../../auth/AuthService";
@@ -11,7 +15,7 @@ const SideBar = (props: any) => {
 
     useEffect(() => {
         authService.getUser().then(userData => {
-           setUser(userData.data);
+            setUser(userData.data);
         });
     }, []);
 
@@ -28,15 +32,21 @@ const SideBar = (props: any) => {
                 <div className='sub-section'>
                     <p className='header'>Life</p>
 
-                    <p className='item'><span className="material-icons m-icon">people</span><Link to={'/home/players'} className={'link'}>Players</Link></p>
-                    <p className='item'><span className="material-icons m-icon">people</span><Link to={'/home/vehicles'} className={'link'}>Vehicles</Link></p>
+                    <p className='item'><span className="material-icons m-icon">people</span><Link to={'/home/players'}
+                                                                                                   className={'link'}>Players</Link>
+                    </p>
+                    <p className='item'><span className="material-icons m-icon">people</span><Link to={'/home/vehicles'}
+                                                                                                   className={'link'}>Vehicles</Link>
+                    </p>
                 </div>
 
                 <div className='sub-section'>
                     <p className='header'>Admin</p>
 
-                    <p className='item'><span className="material-icons m-icon">people</span><Link to={`/home/admin/groups`} className={'link'}>Groups</Link></p>
-                    <p className='item'><span className="material-icons m-icon">people</span><Link to={`/home/admin/users`} className={'link'}>Users</Link></p>
+                    <p className='item'><span className="material-icons m-icon">people</span><Link
+                        to={`/home/admin/groups`} className={'link'}>Groups</Link></p>
+                    <p className='item'><span className="material-icons m-icon">people</span><Link
+                        to={`/home/admin/users`} className={'link'}>Users</Link></p>
                 </div>
             </div>
 
@@ -48,8 +58,8 @@ const SideBar = (props: any) => {
 
                     <span className="material-icons pointer" onClick={handleLogout}>
                         exit_to_app
-                    </span> 
-                </div>                
+                    </span>
+                </div>
             </div>
         </div>
     )

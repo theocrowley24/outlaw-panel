@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2020, Theo Crowley. All rights reserved.
+ */
+
 import {UserGroup} from "../home/admin/groups/UserGroup";
 
 export class User {
@@ -5,7 +9,7 @@ export class User {
     public username: string;
     public userGroup: UserGroup;
 
-    constructor (data: any) {
+    constructor(data: any) {
         this.id = data?.id;
         this.username = data?.username;
 

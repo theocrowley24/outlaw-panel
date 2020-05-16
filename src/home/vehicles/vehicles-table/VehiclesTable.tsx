@@ -1,7 +1,9 @@
+/*
+ * Copyright (c) 2020, Theo Crowley. All rights reserved.
+ */
+
 import React, {useEffect, useState} from "react";
 import CustomTable from "../../../shared/custom-table/CustomTable";
-import {Player, PlayerMapper} from "../../players/Player";
-import PlayersService from "../../players/PlayersService";
 import {VehiclesService} from "../VehiclesService";
 import Vehicles from "../Vehicles";
 import {Vehicle, VehicleMapper} from "../Vehicle";
@@ -22,7 +24,8 @@ const VehiclesTable = (props: any) => {
                         Header: 'Owner',
                         accessor: 'owner',
                         Cell: (cell: any) => {
-                            return (<div className={"vehicle-name"} onClick={() => props.history.push(`/home/vehicles/edit_vehicle?id=${cell.row.values.id}`)} >
+                            return (<div className={"vehicle-name"}
+                                         onClick={() => props.history.push(`/home/vehicles/edit_vehicle?id=${cell.row.values.id}`)}>
                                 <p>{cell.value}</p>
                             </div>);
                         }
@@ -81,7 +84,7 @@ const VehiclesTable = (props: any) => {
     }, []);
 
     return <div>
-        <CustomTable columns={columns} allRows={data} searchField={"allNames"} />
+        <CustomTable columns={columns} allRows={data} searchField={"allNames"}/>
     </div>
 };
 

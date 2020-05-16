@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2020, Theo Crowley. All rights reserved.
+ */
+
 export class UserGroup {
     public id: number;
     public name: string;
@@ -23,5 +27,5 @@ export class UserGroupMapper {
         }
 
         return userGroups;
-    }   
+    }
 }

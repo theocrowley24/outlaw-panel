@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2020, Theo Crowley. All rights reserved.
+ */
+
 export interface IPlayer {
     id: number;
     allNames: string;
@@ -13,7 +17,7 @@ export interface IPlayer {
 
 }
 
-export class Player{
+export class Player {
     public id: number;
     public allNames: string;
     public lastName: string;

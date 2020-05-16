@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2020, Theo Crowley. All rights reserved.
+ */
+
 import {Permission} from "../home/admin/Permission";
 
 class PermissionChecker {

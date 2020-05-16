@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2020, Theo Crowley. All rights reserved.
+ */
+
 import React from "react";
 import {Backdrop, CircularProgress, createStyles, Theme} from "@material-ui/core";
 import './Loading.scss';
@@ -17,7 +21,7 @@ const Loading = () => {
 
     return (
         <Backdrop className={classes.backdrop} open={true}>
-            <CircularProgress color="inherit" />
+            <CircularProgress color="inherit"/>
         </Backdrop>
     )
 }

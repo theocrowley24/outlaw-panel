@@ -1,3 +1,7 @@
+/*!
+ * Copyright (c) 2020, Theo Crowley. All rights reserved.
+ */
+
 @import '../../../styles/colours.scss';
 
 .table-container {
@@ -5,7 +9,7 @@
 }
 
 .player-name {
-  p{
+  p {
     cursor: pointer;
     color: $contrast;
   }

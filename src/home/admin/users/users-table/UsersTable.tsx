@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2020, Theo Crowley. All rights reserved.
+ */
+
 import React, {useEffect, useState} from "react";
 import './UsersTable.scss';
 import {UsersService} from "../UsersService";
@@ -27,7 +31,8 @@ const UsersTable = (props: any) => {
                         Header: 'Username',
                         accessor: 'username',
                         Cell: (cell: any) => {
-                            return (<div className={"user-name"} onClick={() => props.history.push(`/home/admin/users/edit_user?id=${cell.row.values.id}`)} >
+                            return (<div className={"user-name"}
+                                         onClick={() => props.history.push(`/home/admin/users/edit_user?id=${cell.row.values.id}`)}>
                                 <p>{cell.value}</p>
                             </div>);
                         }
@@ -50,7 +55,7 @@ const UsersTable = (props: any) => {
     );
 
     return <div>
-        <CustomTable columns={columns} allRows={data} searchField={"username"} />
+        <CustomTable columns={columns} allRows={data} searchField={"username"}/>
     </div>
 };
 

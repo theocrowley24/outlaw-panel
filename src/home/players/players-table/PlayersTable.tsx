@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2020, Theo Crowley. All rights reserved.
+ */
+
 import React, {useEffect, useState} from "react";
 import './PlayersTable.scss';
 import {Player, PlayerMapper} from "../Player";
@@ -20,7 +24,8 @@ const PlayersTable = (props: any) => {
                         Header: 'All names',
                         accessor: 'allNames',
                         Cell: (cell: any) => {
-                            return (<div className={"player-name"} onClick={() => props.history.push(`/home/players/edit_player?id=${cell.row.values.id}`)} >
+                            return (<div className={"player-name"}
+                                         onClick={() => props.history.push(`/home/players/edit_player?id=${cell.row.values.id}`)}>
                                 <p>{cell.value}</p>
                             </div>);
                         }
@@ -83,7 +88,7 @@ const PlayersTable = (props: any) => {
         });
     }, []);
 
-    return  <CustomTable columns={columns} allRows={data} searchField={"allNames"}/>
+    return <CustomTable columns={columns} allRows={data} searchField={"allNames"}/>
 
 };
 

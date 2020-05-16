@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2020, Theo Crowley. All rights reserved.
+ */
+
 abstract class Service {
     protected getRequest(path: string): Promise<any> {
         return fetch(`http://localhost:8080/${path}`, {

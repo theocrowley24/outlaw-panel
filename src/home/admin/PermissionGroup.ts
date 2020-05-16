@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2020, Theo Crowley. All rights reserved.
+ */
+
 export class PermissionGroup {
     public id: number;
     public name: string;

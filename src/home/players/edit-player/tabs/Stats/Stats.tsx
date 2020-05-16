@@ -1,18 +1,29 @@
+/*
+ * Copyright (c) 2020, Theo Crowley. All rights reserved.
+ */
+
 import React, {useEffect, useState} from "react";
 import "./Stats.scss";
 import {Button, TextField} from "@material-ui/core";
 import {Player} from "../../../Player";
 import PlayersService from "../../../PlayersService";
 import PermissionService from "../../../../admin/groups/PermissionsService";
-import PermissionChecker, {PermissionValue} from "../../../../../permissions/PermissionChecker";
-import {PermissionMapper} from "../../../../admin/Permission";
+import {PermissionValue} from "../../../../../permissions/PermissionChecker";
 import Loading from "../../../../../loading/Loading";
+// @ts-ignore
+import ToastServive from 'react-material-toast';
+
+const toast = ToastServive.new({
+    place: 'topRight',
+    duration: 2,
+    maxCount: 8
+});
 
 interface IDictionary {
     [index: string]: string;
 }
 
-const Stats = ({player}: {player: Player}) => {
+const Stats = ({player}: { player: Player }) => {
     const [updatedStats, setUpdatedStats] = useState({} as IDictionary);
     const [hasPermission, setHasPermission] = useState(false);
     const [loading, setLoading] = useState(true);
@@ -28,7 +39,8 @@ const Stats = ({player}: {player: Player}) => {
     };
 
     const handleUpdateButton = () => {
-        playersService.updatePlayer(player.id, updatedStats).then(() => {
+        playersService.updatePlayer(player.id, updatedStats).then((response) => {
+            toast.success("Updated player successfully");
         });
     };
 
@@ -39,7 +51,7 @@ const Stats = ({player}: {player: Player}) => {
         });
     }, []);
 
-    if(loading) {
+    if (loading) {
         return <Loading/>
     }
 
@@ -57,19 +69,19 @@ const Stats = ({player}: {player: Player}) => {
                     disabled
                     id="standard-basic"
                     label="ID"
-                    defaultValue={player.id || ""} />
+                    defaultValue={player.id || ""}/>
                 <TextField
                     className={"player-stat"}
                     disabled
                     id="standard-basic"
                     label="All names"
-                    defaultValue={player.allNames || ""} />
+                    defaultValue={player.allNames || ""}/>
                 <TextField
                     className={"player-stat"}
                     onChange={handleInputChange}
                     id="lastName"
                     label="Last name"
-                    defaultValue={player.lastName || ""} />
+                    defaultValue={player.lastName || ""}/>
                 <TextField
                     className={"player-stat"}
                     onChange={handleInputChange}
@@ -83,40 +95,40 @@ const Stats = ({player}: {player: Player}) => {
                     type={"number"}
                     id="bank"
                     label="Bank"
-                    defaultValue={player.bank || ""} />
+                    defaultValue={player.bank || ""}/>
                 <TextField
                     className={"player-stat"}
                     onChange={handleInputChange}
                     id="profession"
                     label="Profession"
-                    defaultValue={player.profession || ""} />
+                    defaultValue={player.profession || ""}/>
                 <TextField
                     className={"player-stat"}
                     disabled
                     id="standard-basic"
                     label="Gear"
-                    defaultValue={player.gear || ""} />
+                    defaultValue={player.gear || ""}/>
                 <TextField
                     className={"player-stat"}
                     onChange={handleInputChange}
                     type={"number"}
                     id="natoRank"
                     label="NATO Rank"
-                    defaultValue={player.natoRank || ""} />
+                    defaultValue={player.natoRank || ""}/>
                 <TextField
                     className={"player-stat"}
                     onChange={handleInputChange}
                     type={"number"}
                     id="alive"
                     label="Alive"
-                    defaultValue={player.alive || ""} />
+                    defaultValue={player.alive || ""}/>
                 <TextField
                     className={"player-stat"}
                     onChange={handleInputChange}
                     type={"number"}
                     id="adminLevel"
                     label="Admin level"
-                    defaultValue={player.adminLevel || ""} />
+                    defaultValue={player.adminLevel || ""}/>
             </div>
 
             <div className={"update-button"}>
