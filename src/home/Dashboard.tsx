@@ -6,6 +6,8 @@ import Players from "./players/Players";
 import Groups from "./admin/groups/Groups";
 import Vehicles from "./vehicles/Vehicles";
 import Users from "./admin/users/Users";
+import PrivateRoute from "../auth/PrivateRoute";
+import {PermissionValue} from "../permissions/PermissionChecker";
 
 const Dashboard = () => {
     return (
@@ -16,7 +18,7 @@ const Dashboard = () => {
                 <Route path="/home/players" component={Players} />
                 <Route path="/home/vehicles" component={Vehicles} />
                 <Route path="/home/admin/users" component={Users}/>
-                <Route path="/home/admin/groups" component={Groups}/>
+                <PrivateRoute permission={PermissionValue.ViewRanks} path="/home/admin/groups" component={Groups}/>
             </div>
         </div>
         

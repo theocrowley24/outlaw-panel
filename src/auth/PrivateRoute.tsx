@@ -18,7 +18,7 @@ const toast = ToastServive.new({
 
 
 const PrivateRoute = ({ component: Component, permission, ...rest }: any) => {
-    const [cookies, setCookie, removeCookie] = useCookies(['uid']);
+    const [cookies] = useCookies(['uid']);
     const [verified, setVerified] = useState({verified: false, loading: true});
     const [hasPermission, setHasPermission] = useState({hasPermission: false, loading: true});
 

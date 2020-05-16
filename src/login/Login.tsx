@@ -5,6 +5,7 @@ import { Redirect } from "react-router-dom";
 import AuthService from "../auth/AuthService";
 // @ts-ignore
 import ToastServive from 'react-material-toast';
+import {useCookies} from "react-cookie";
 const toast = ToastServive.new({
   place:'topRight',
   duration:2,
@@ -34,12 +35,17 @@ const useStyles = makeStyles((theme) => ({
 const Login = (props: any) => {
   const [username, setUsername]= useState("");
   const [password, setPassword] = useState("");
+  const [cookies] = useCookies(['uid', 'authToken']);
 
   const classes = useStyles();
 
   let authService = new AuthService();
 
   //if (authService.isLoggedIn()) return <Redirect to="/home"/>;
+
+  if (cookies['uid'] && cookies['authToken']) {
+    return <Redirect to="/home"/>;
+  }
 
   const handleSubmit = (event: any): void => {
     event.preventDefault();
