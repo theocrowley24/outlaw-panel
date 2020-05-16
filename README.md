@@ -1,4 +1,4 @@
-### Outlaw Panel by Theo Crowley
+# Outlaw Panel by Theo Crowley
 An administrative database tool designed for a custom Arma 3 mission. Includes an advanced permission and user group system as well as administrative functionality to safely modify a MySQL database. This is the frontend repository.
 
 Written in React with TypeScript and SASS. Backend API written in PHP Slim.
