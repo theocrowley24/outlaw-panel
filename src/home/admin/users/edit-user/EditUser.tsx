@@ -7,10 +7,19 @@ import {Button, FormControlLabel, InputLabel, MenuItem, Paper, Select, Switch, T
 import {UserGroup, UserGroupMapper} from "../../groups/UserGroup";
 import PermissionService from "../../groups/PermissionsService";
 
+// @ts-ignore
+import ToastServive from 'react-material-toast';
+const toast = ToastServive.new({
+    place:'topRight',
+    duration:2,
+    maxCount:8
+});
+
 const EditUser = (props: any) => {
     const [user, setUser] = useState(new User(null));
     const [userGroups, setUserGroups] = useState([new UserGroup(null)]);
     const [accountDeactivated, setAccountDeactivated] = useState(false);
+    const [resetPassword, setResetPassword] = useState("");
 
     let userId: number = Number(queryString.parse(props.location.search).id);
 
@@ -40,8 +49,24 @@ const EditUser = (props: any) => {
         setAccountDeactivated(event.target.checked)
     };
 
-    const handleUpdateUser = () => {
+    const handleResetPasswordChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+        setResetPassword(String(event.target.value));
+    };
 
+    const handleUpdateUser = () => {
+        let data = {
+            "rank_id": user.userGroup.id,
+            "reset_password": resetPassword,
+            "inactive": accountDeactivated
+        };
+
+        usersService.updateUser(userId, data).then(response => {
+            if (response.status === 200) {
+                toast.success(response.message);
+            } else {
+                toast.error(response.message);
+            }
+        });
     };
 
     const UserGroups = () => {
@@ -73,7 +98,7 @@ const EditUser = (props: any) => {
                 </div>
 
                 <div>
-                    <TextField placeholder={"Reset password"}/>
+                    <TextField placeholder={"Reset password"} type={"password"} onChange={handleResetPasswordChange}/>
                 </div>
 
                 <div>
@@ -88,7 +113,6 @@ const EditUser = (props: any) => {
                 <div className={"update-button"}>
                     <Button variant="contained" color="primary" onClick={handleUpdateUser}>Update</Button>
                 </div>
-
             </div>
         </Paper>
     </div>
