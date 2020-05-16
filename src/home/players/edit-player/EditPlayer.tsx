@@ -8,8 +8,9 @@ import queryString from "query-string";
 import PlayersService from "../PlayersService";
 import {Player} from "../Player";
 import CustomTab from "../../../shared/custom-tab/CustomTab";
-import Licenses from "./tabs/Licenses/Licenses";
-import Stats from "./tabs/Stats/Stats";
+import Licenses from "./tabs/licenses/Licenses";
+import Stats from "./tabs/stats/Stats";
+import Transactions from "./tabs/transactions/Transactions";
 
 const EditPlayer = (props: any) => {
     const [player, setPlayer] = useState(new Player(null));
@@ -26,6 +27,10 @@ const EditPlayer = (props: any) => {
 
     const StatsWrapper = () => {
         return <Stats player={player}/>
+    };
+
+    const TransactionsWrapper = () => {
+        return <Transactions player={player}/>
     };
 
     return <div>
@@ -133,7 +138,7 @@ const EditPlayer = (props: any) => {
             </div>
         </div>
         <div className={"tab-wrapper"}>
-            <CustomTab tabLabels={["Stats", "Licenses"]} components={[StatsWrapper, Licenses]}/>
+            <CustomTab tabLabels={["Stats", "Licenses", "Transactions"]} components={[StatsWrapper, Licenses, TransactionsWrapper]}/>
         </div>
     </div>
 };
