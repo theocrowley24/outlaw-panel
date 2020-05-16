@@ -25,7 +25,7 @@ const VehiclesTable = (props: any) => {
                         accessor: 'owner',
                         Cell: (cell: any) => {
                             return (<div className={"vehicle-name"}
-                                         onClick={() => props.history.push(`/home/vehicles/edit_vehicle?id=${cell.row.values.id}`)}>
+                                         onClick={() => {/*props.history.push(`/home/vehicles/edit_vehicle?id=${cell.row.values.id}`)*/}}>
                                 <p>{cell.value}</p>
                             </div>);
                         }

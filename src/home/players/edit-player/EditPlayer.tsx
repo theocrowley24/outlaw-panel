@@ -83,23 +83,51 @@ const EditPlayer = (props: any) => {
                     </div>
 
                     <div className={"flex-right-align"}>
-            <span className="material-icons v-centre">
-            security
-            </span>
+                <span className="material-icons v-centre">
+                security
+                </span>
                     </div>
                 </div>
             </div>
             <div className={"info-box shadow"}>
                 <div className={"flex"}>
                     <div>
-                        <p className={"info-value"}>{player.profession}</p>
-                        <p>Profession</p>
+                        <p className={"info-value"}>{player.xp}</p>
+                        <p>XP</p>
                     </div>
 
                     <div className={"flex-right-align"}>
-            <span className="material-icons v-centre">
-            work
-            </span>
+                <span className="material-icons v-centre">
+                bar_chart
+                </span>
+                    </div>
+                </div>
+            </div>
+            <div className={"info-box shadow"}>
+                <div className={"flex"}>
+                    <div>
+                        <p className={"info-value"}>{player.level}</p>
+                        <p>Level</p>
+                    </div>
+
+                    <div className={"flex-right-align"}>
+                <span className="material-icons v-centre">
+                star
+                </span>
+                    </div>
+                </div>
+            </div>
+            <div className={"info-box shadow"}>
+                <div className={"flex"}>
+                    <div>
+                        <p className={"info-value"}>{player.rcRank}</p>
+                        <p>RC rank</p>
+                    </div>
+
+                    <div className={"flex-right-align"}>
+                <span className="material-icons v-centre">
+                local_hospital
+                </span>
                     </div>
                 </div>
             </div>

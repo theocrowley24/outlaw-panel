@@ -21,6 +21,10 @@ const PlayersTable = (props: any) => {
                         accessor: 'id'
                     },
                     {
+                        Header: 'uid',
+                        accessor: 'uid'
+                    },
+                    {
                         Header: 'All names',
                         accessor: 'allNames',
                         Cell: (cell: any) => {
@@ -43,20 +47,24 @@ const PlayersTable = (props: any) => {
                         accessor: 'bank'
                     },
                     {
-                        Header: 'Profession',
-                        accessor: 'profession'
+                        Header: 'Dirty',
+                        accessor: 'dirty'
                     },
                     {
-                        Header: 'Gear',
-                        accessor: 'gear'
+                        Header: 'XP',
+                        accessor: 'xp'
                     },
                     {
-                        Header: 'Licenses',
-                        accessor: 'licenses'
+                        Header: 'Level',
+                        accessor: 'level'
                     },
                     {
                         Header: 'NATO rank',
                         accessor: 'natoRank'
+                    },
+                    {
+                        Header: 'RC rank',
+                        accessor: 'rcRank'
                     },
                     {
                         Header: 'Admin level',
@@ -88,7 +96,9 @@ const PlayersTable = (props: any) => {
         });
     }, []);
 
-    return <CustomTable columns={columns} allRows={data} searchField={"allNames"}/>
+    return <div className={"table-wrapper"}>
+        <CustomTable columns={columns} allRows={data} searchField={"allNames"}/>
+    </div>
 
 };
 

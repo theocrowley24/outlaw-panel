@@ -14,3 +14,9 @@
     color: $contrast;
   }
 }
+.table-wrapper {
+  max-width: 100%;
+  max-height: 100%;
+
+  overflow: auto;
+}

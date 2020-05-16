@@ -69,7 +69,13 @@ const Stats = ({player}: { player: Player }) => {
                     disabled
                     id="standard-basic"
                     label="ID"
-                    defaultValue={player.id || ""}/>
+                    defaultValue={player.id || 0}/>
+                <TextField
+                    className={"player-stat"}
+                    disabled
+                    id="standard-basic"
+                    label="UID"
+                    defaultValue={player.uid || 0}/>
                 <TextField
                     className={"player-stat"}
                     disabled
@@ -88,22 +94,52 @@ const Stats = ({player}: { player: Player }) => {
                     type={"number"}
                     id="cash"
                     label="Cash"
-                    defaultValue={player.cash || ""}/>
+                    defaultValue={player.cash || 0}/>
                 <TextField
                     className={"player-stat"}
                     onChange={handleInputChange}
                     type={"number"}
                     id="bank"
                     label="Bank"
-                    defaultValue={player.bank || ""}/>
+                    defaultValue={player.bank || 0}/>
                 <TextField
                     className={"player-stat"}
-                    onChange={handleInputChange}
-                    id="profession"
-                    label="Profession"
-                    defaultValue={player.profession || ""}/>
+                    type={"number"}
+                    id="standard-basic"
+                    label="Dirty"
+                    defaultValue={player.dirty || 0}/>
                 <TextField
                     className={"player-stat"}
+                    type={"number"}
+                    id="standard-basic"
+                    label="XP"
+                    defaultValue={player.xp || 0}/>
+                <TextField
+                    className={"player-stat"}
+                    type={"number"}
+                    id="standard-basic"
+                    label="Level"
+                    defaultValue={player.level || 0}/>
+                <TextField
+                    className={"player-stat"}
+                    multiline
+                    rows={4}
+                    disabled
+                    id="standard-basic"
+                    label="Talents"
+                    defaultValue={player.talents || ""}/>
+                <TextField
+                    className={"player-stat"}
+                    multiline
+                    rows={4}
+                    disabled
+                    id="standard-basic"
+                    label="My Transactions"
+                    defaultValue={player.myTransactions || ""}/>
+                <TextField
+                    className={"player-stat"}
+                    multiline
+                    rows={4}
                     disabled
                     id="standard-basic"
                     label="Gear"
@@ -114,21 +150,33 @@ const Stats = ({player}: { player: Player }) => {
                     type={"number"}
                     id="natoRank"
                     label="NATO Rank"
-                    defaultValue={player.natoRank || ""}/>
+                    defaultValue={player.natoRank || 0}/>
+                <TextField
+                    className={"player-stat"}
+                    type={"number"}
+                    id="standard-basic"
+                    label="RC Rank"
+                    defaultValue={player.rcRank || 0}/>
+                <TextField
+                    className={"player-stat"}
+                    disabled
+                    id="standard-basic"
+                    label="Jailed"
+                    defaultValue={player.jailed || ""}/>
                 <TextField
                     className={"player-stat"}
                     onChange={handleInputChange}
                     type={"number"}
                     id="alive"
                     label="Alive"
-                    defaultValue={player.alive || ""}/>
+                    defaultValue={player.alive || 1}/>
                 <TextField
                     className={"player-stat"}
                     onChange={handleInputChange}
                     type={"number"}
                     id="adminLevel"
                     label="Admin level"
-                    defaultValue={player.adminLevel || ""}/>
+                    defaultValue={player.adminLevel || 0}/>
             </div>
 
             <div className={"update-button"}>
