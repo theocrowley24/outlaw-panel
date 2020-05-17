@@ -5,6 +5,10 @@
 import Service from "../../../services/Service";
 
 class PermissionService extends Service {
+    public doIHavePermission(permissionId: number): Promise<any> {
+        return this.postRequest("permissions/doIHavePermission", {permissionId: permissionId});
+    }
+
     public userHasPermission(userId: number, permissionId: number): Promise<any> {
         return this.postRequest("permissions/userHasPermission", {userId: userId, permissionId: permissionId});
     }

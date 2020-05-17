@@ -13,6 +13,7 @@ import {UserGroup, UserGroupMapper} from "../../groups/UserGroup";
 
 // @ts-ignore
 import ToastServive from 'react-material-toast';
+import {PermissionValue} from "../../../../permissions/PermissionChecker";
 
 const toast = ToastServive.new({
     place: 'topRight',
@@ -30,6 +31,8 @@ const UsersTable = (props: any) => {
 
     const [userGroups, setUserGroups]  = useState([new UserGroup(null)]);
 
+    const [hasPermission, setHasPermission] = useState(false);
+
     let usersService = new UsersService();
     let permissionsService = new PermissionService();
 
@@ -40,6 +43,10 @@ const UsersTable = (props: any) => {
 
         permissionsService.getAllRanks().then(response => {
            setUserGroups(UserGroupMapper.map(response.data));
+        });
+
+        permissionsService.doIHavePermission(PermissionValue.CreateUser).then(response => {
+           setHasPermission(response.data);
         });
     }, []);
 
@@ -115,6 +122,18 @@ const UsersTable = (props: any) => {
         });
     };
 
+    const createUserButtonWrapper = () => {
+      if (hasPermission) {
+          return <div className={"create-user-button"}>
+              <Button variant="contained" color="primary" onClick={handleCreateUserOnClick}>
+                  Create user
+              </Button>
+          </div>
+      } else {
+          return <div />
+      }
+    };
+
     return <div>
         <Dialog open={newUserDialogOpen} onClose={() => setNewUserDialogOpen(false)} >
             <DialogTitle>Create user</DialogTitle>
@@ -144,11 +163,7 @@ const UsersTable = (props: any) => {
 
         </Dialog>
 
-        <div className={"create-user-button"}>
-            <Button variant="contained" color="primary" onClick={handleCreateUserOnClick}>
-                Create user
-            </Button>
-        </div>
+        {createUserButtonWrapper()}
 
         <CustomTable columns={columns} allRows={data} searchField={"username"}/>
     </div>
