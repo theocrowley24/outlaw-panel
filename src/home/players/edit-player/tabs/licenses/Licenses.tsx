@@ -11,10 +11,13 @@ const Licenses = ({player}: { player: Player }) => {
     const licenses = () => {
         let view: any[] = [];
 
-        // @ts-ignore
-        player.licenses.match(/`(.*?)`/g).forEach((element, index) => {
-            view.push(<ListItem key={index}><ListItemText>{element}</ListItemText></ListItem>);
-        });
+        let matches = player.licenses.match(/`(.*?)`/g);
+
+        if (matches) {
+            matches.forEach((element, index) => {
+                view.push(<ListItem key={index}><ListItemText>{element}</ListItemText></ListItem>);
+            });
+        }
 
         return view;
     };

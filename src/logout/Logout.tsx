@@ -6,7 +6,7 @@ import React from "react";
 import {useCookies} from "react-cookie";
 
 const Logout = () => {
-    const [cookies, setCookie, removeCookie] = useCookies(['uid', 'authToken']);
+    const [, , removeCookie] = useCookies(['uid', 'authToken']);
 
     removeCookie('uid');
     removeCookie('authToken');

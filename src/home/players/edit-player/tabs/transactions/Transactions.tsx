@@ -13,10 +13,13 @@ const Transactions = ({player}: { player: Player }) => {
     const transactionHistory = () => {
         let view: any[] = [];
 
-        // @ts-ignore
-        player.myTransactions.match(/\[`(.*?)`,`(.*?)`\]/g).forEach((element, index) => {
-            view.push(<ListItem key={index}><ListItemText>{element}</ListItemText></ListItem>);
-        });
+        let matches = player.myTransactions.match(/\[`(.*?)`,`(.*?)`\]/g);
+
+        if (matches) {
+            matches.forEach((element, index) => {
+                view.push(<ListItem key={index}><ListItemText>{element}</ListItemText></ListItem>);
+            });
+        }
 
         return view;
     };

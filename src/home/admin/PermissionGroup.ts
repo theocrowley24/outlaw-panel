@@ -14,6 +14,10 @@ export class PermissionGroup {
 
 export class PermissionGroupMapper {
     public static map(data: any): PermissionGroup[] {
+        if (data === null || !data) {
+            return [];
+        }
+
         let permissionGroups: PermissionGroup[] = [];
 
         for (let i = 0; i < data.length; i++) {

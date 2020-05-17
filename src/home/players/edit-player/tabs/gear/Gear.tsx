@@ -11,10 +11,13 @@ const Gear = ({player}: { player: Player }) => {
     const gear = () => {
         let view: any[] = [];
 
-        // @ts-ignore
-        player.gear.match(/\[(.*?)\]/g).forEach((element, index) => {
-            view.push(<ListItem key={index}><ListItemText>{element}</ListItemText></ListItem>);
-        });
+        let matches = player.gear.match(/\[(.*?)\]/g);
+
+        if (matches) {
+            matches.forEach((element, index) => {
+                view.push(<ListItem key={index}><ListItemText>{element}</ListItemText></ListItem>);
+            });
+        }
 
         return view;
     };

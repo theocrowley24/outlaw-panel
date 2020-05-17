@@ -65,11 +65,7 @@ const EditUser = (props: any) => {
         };
 
         usersService.updateUser(userId, data).then(response => {
-            if (response.status === 200) {
-                toast.success(response.message);
-            } else {
-                toast.error(response.message);
-            }
+            toast.success(response.message);
         });
     };
 

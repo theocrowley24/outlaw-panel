@@ -30,6 +30,10 @@ export class Vehicle {
 
 export class VehicleMapper {
     public static map(data: any): Vehicle[] {
+        if (data === null || !data) {
+            return [];
+        }
+
         let vehicles: Vehicle[] = [];
 
         for (let i = 0; i < data.length; i++) {

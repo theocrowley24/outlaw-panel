@@ -72,10 +72,12 @@ const SideBar = (props: any) => {
                     <span className="material-icons">
                         settings
                     </span>
+                    <Link to={`/logout`} className={'link-title'}>
+                        <span className="material-icons pointer">
+                            exit_to_app
+                        </span>
+                    </Link>
 
-                    <span className="material-icons pointer" onClick={handleLogout}>
-                        exit_to_app
-                    </span>
                 </div>
             </div>
         </div>

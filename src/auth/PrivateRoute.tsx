@@ -49,7 +49,7 @@ const PrivateRoute = ({component: Component, permission, ...rest}: any) => {
                 setHasPermission({hasPermission: false, loading: false});
             }
         });
-    }, []);
+    }, [cookies, permission]);
 
     if (hasPermission.loading || verified.loading) {
         return <Loading/>

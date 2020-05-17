@@ -13,6 +13,7 @@ import Users from "./admin/users/Users";
 import PrivateRoute from "../auth/PrivateRoute";
 import {PermissionValue} from "../permissions/PermissionChecker";
 import Root from "./root/Root";
+import GroupsRouter from "./admin/groups/GroupsRouter";
 
 const Dashboard = () => {
     const getYear = () => {
@@ -28,7 +29,7 @@ const Dashboard = () => {
                 <Route path="/home/players" component={Players}/>
                 <Route path="/home/vehicles" component={Vehicles}/>
                 <Route path="/home/admin/users" component={Users}/>
-                <PrivateRoute permission={PermissionValue.ViewRanks} path="/home/admin/groups" component={Groups}/>
+                <Route path="/home/admin/groups" component={GroupsRouter}/>
 
                 <small>&copy; Copyright {getYear()}, Theo Crowley. All rights reserved.</small>
             </div>

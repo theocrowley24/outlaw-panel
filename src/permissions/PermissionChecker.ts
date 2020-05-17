@@ -18,7 +18,8 @@ export enum PermissionValue {
     ViewUsers = 20,
     ViewUser = 22,
     UpdateUser = 21,
-    ViewRanks = 14
+    ViewRanks = 14,
+    CreateUser = 23
 }
 
 export default PermissionChecker;

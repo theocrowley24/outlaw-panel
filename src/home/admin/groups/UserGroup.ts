@@ -16,7 +16,7 @@ export class UserGroup {
 
 export class UserGroupMapper {
     public static map(data: any): UserGroup[] {
-        if (data == null) {
+        if (data === null || !data) {
             return [];
         }
 

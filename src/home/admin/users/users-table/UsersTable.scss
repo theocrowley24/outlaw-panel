@@ -8,3 +8,19 @@
   cursor: pointer;
   color: $contrast;
 }
+
+.create-user-button {
+  display:flex;
+  width: fit-content;
+  margin-left: auto;
+  margin-top: 15px;
+  margin-right: 15px;
+}
+
+.new-user-dialog {
+  width: 300px;
+
+  .input-wrapper {
+    margin: 10px;
+  }
+}

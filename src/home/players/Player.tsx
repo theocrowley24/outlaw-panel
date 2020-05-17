@@ -46,6 +46,10 @@ export class Player {
 
 export class PlayerMapper {
     public static map(data: any): Player[] {
+        if (data === null || !data) {
+            return [];
+        }
+
         let players: Player[] = [];
 
         for (let i = 0; i < data.length; i++) {
