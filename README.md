@@ -3,6 +3,8 @@ An administrative database tool designed for a custom Arma 3 mission. Includes a
 
 Written in React with TypeScript and SASS. Backend API written in PHP Slim.
 
+![Dashboard](https://i.gyazo.com/6ff53e491ede8d9386c51d6af8373c30.png)
+
 ## Available Scripts
 
 In the project directory, you can run:
